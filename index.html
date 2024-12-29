@@ -24,13 +24,25 @@
             text-decoration: underline;
         }
 
-        .projects, .earlier-projects {
+        .projects, .earlier-projects, .blogs {
             margin-top: 20px;
         }
 
-        .projects ul, .earlier-projects ul {
+        .projects ul, .earlier-projects ul, .blogs ul {
             list-style-type: disc;
             padding-left: 20px;
+        }
+
+        .image-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .image-section img {
+            border: 3px solid #00aaff;
+            border-radius: 10px;
+            max-width: 300px;
+            max-height: 300px;
         }
 
         .footer {
@@ -41,7 +53,7 @@
 </head>
 <body>
 
-    <h1>Hello Fellow Homo sapiens!</h1>
+    <h1>Hello Fellow Homo Sapiens!</h1>
 
     <p>My name is <strong>Liyu Zerihun</strong>, and I am an undergrad at <strong>UCLA</strong>, currently studying <strong>Computer Science</strong>.</p>
 
@@ -49,7 +61,9 @@
 
     <div class="projects">
         <ul>
-            <li><strong><a href="#">Automa</a></strong> - A graph programming language focused on computation and transitions.</li>
+            <li><strong><a href="#">Automa</a></strong> - A graph programming language focused on computation and transitions, inspired from the theory of 
+            finite state automata.
+            </li>
             <li><strong><a href="#">Rituals</a></strong> - A lifestyle optimization app. You can check out our website <a href="#">here</a>.</li>
         </ul>
     </div>
@@ -65,6 +79,25 @@
             <li><a href="https://github.com/LiyuZer/EcoEats" target="_blank">EcoEats</a></li>
             <li><a href="https://github.com/stephanienguyen2020/iris" target="_blank">Iris</a></li>
         </ul>
+    </div>
+
+    <h2>You can access my personal writings here ...</h2>
+
+    <div class="blogs">
+        <ul>
+            <li><a href="blog1.html">Blog 1</a></li>
+            <li><a href="blog2.html">Blog 2</a></li>
+            <li><a href="blog3.html">Blog 3</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h2>About Me</h2>
+
+    <div class="image-section">
+        <img src="personal_img.jpg">
+        <p>Hi! That's me. Always excited to work on fascinating projects!</p>
     </div>
 
     <div class="footer">
