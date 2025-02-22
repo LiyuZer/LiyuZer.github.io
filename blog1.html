@@ -1,39 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>On the Sisyphean Nature of Life</title>
     <style>
         body {
-            background-color: #001f3f; /* Dark Blue */
-            color: white; /* Text color */
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            background-color: #001f3f; /* Deep Space Blue */
+            color: white;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            padding: 20px;
         }
 
         h1, h2 {
-            color: #00aaff; /* Lighter Blue for Headings */
+            color: #00aaff;
         }
 
         p {
             line-height: 1.6;
+            text-align: justify;
         }
 
         .footer {
             margin-top: 40px;
             font-style: italic;
+            font-size: 14px;
+            color: #bbb;
         }
 
-        .content {
-            margin-top: 20px;
+        .footer span {
+            color: #00ffcc;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>On the Sisyphean Nature of Life</h1>
 
-    <h1>On the Sisyphean Nature of Life</h1>
-
-    <div class="content">
         <p>Albert Camus once wrote that the only serious philosophical question is whether or not to commit the act of suicide. I remember first reading those words and the slight surprise that followed. He is right: why live? Why go on?</p>
 
         <p>The answers are various, and with each, a fundamental axiom of one’s own life comes to light.</p>
@@ -62,7 +75,11 @@
 
     <div class="footer">
         <p>May the pseudo-deterministic universe be ever in your favor.</p>
+        <p>(Check your browser console for a surprise!)</p>
     </div>
 
+    <script>
+        console.log("Welcome to the Absurdist Paradox, Fellow Thinker.");
+    </script>
 </body>
 </html>
