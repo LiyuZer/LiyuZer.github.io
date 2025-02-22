@@ -1,106 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liyu Zerihun's Portfolio</title>
     <style>
         body {
-            background-color: #001f3f; /* Dark Blue */
-            color: white; /* Text color */
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            background-color: #001f3f; /* Deep Space Blue */
+            color: white;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            padding: 20px;
         }
 
         h1, h2 {
-            color: #00aaff; /* Lighter Blue for Headings */
+            color: #00aaff;
         }
 
         a {
-            color: #0073e6;
+            color: #00aaff;
             text-decoration: none;
+            transition: 0.3s;
         }
 
         a:hover {
             text-decoration: underline;
-        }
-
-        .projects, .earlier-projects, .blogs {
-            margin-top: 20px;
+            color: #66c2ff;
         }
 
         .projects ul, .earlier-projects ul, .blogs ul {
-            list-style-type: disc;
-            padding-left: 20px;
+            list-style-type: none;
+            padding: 0;
         }
 
-        .image-section {
-            margin-top: 20px;
-            text-align: center;
+        .projects li, .earlier-projects li, .blogs li {
+            background: rgba(255, 255, 255, 0.1);
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .projects li:hover, .earlier-projects li:hover, .blogs li:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .image-section img {
             border: 3px solid #00aaff;
-            border-radius: 10px;
-            max-width: 300px;
-            max-height: 300px;
+            border-radius: 50%;
+            max-width: 200px;
         }
 
         .footer {
             margin-top: 40px;
             font-style: italic;
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        .footer span {
+            color: #00ffcc;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Hello, Computational Entities!</h1>
+        <p>I am <strong>Liyu Zerihun</strong>, an undergrad at <strong>UCLA</strong>, studying <strong>Computer Science</strong>.</p>
+        <p>My passions lie in <strong>machine learning</strong>, <strong>automata theory</strong>, and building <strong>systems that persist beyond state transitions</strong>.</p>
+        
+        <h2>Current Projects</h2>
+        <div class="projects">
+            <ul>
+                <li><strong><a href="#">Automa</a></strong> - A programming language centered around computation through state transitions.</li>
+                <li><strong><a href="https://www.rituals.app/">Rituals</a></strong> - A lifestyle optimization app designed to help people form better habits.</li>
+            </ul>
+        </div>
 
-    <h1>Hello Fellow Homo Sapiens!</h1>
-
-    <p>My name is <strong>Liyu Zerihun</strong>, and I am an undergrad at <strong>UCLA</strong>, currently studying <strong>Computer Science</strong>.</p>
-
-    <p>I am quite passionate about <strong>machine learning</strong> and <strong>algorithms</strong> and am currently working on these projects:</p>
-
-    <div class="projects">
-        <ul>
-            <li><strong><a href="#">Automa</a></strong> - A graph programming language focused on computation and transitions, inspired from the theory of 
-            finite state automata.
-            </li>
-            <li><strong><a href="#">Rituals</a></strong> - A lifestyle optimization app that I am helping build. You can check out our website <a href="https://www.rituals.app/">here</a>.</li>
-        </ul>
+        <h2>Earlier Work</h2>
+        <div class="earlier-projects">
+            <ul>
+                <li><a href="https://github.com/LiyuZer/NeuroEvolution">NeuroEvolution</a></li>
+                <li><a href="https://github.com/LiyuZer/NBL-ML-Library-">Machine Learning Library</a></li>
+                <li><a href="https://github.com/LiyuZer/EcoEats">EcoEats</a></li>
+                <li><a href="https://github.com/stephanienguyen2020/iris">Iris</a></li>
+            </ul>
+        </div>
+        
+        <h2>My Writings</h2>
+        <div class="blogs">
+            <ul>
+                <li><a href="blog1.html">Blog 1: Exploring Graph-Based Computation</a></li>
+            </ul>
+        </div>
+        
+        <h2>About Me</h2>
+        <div class="image-section">
+            <img src="personal_img.jpg" alt="Liyu Zerihun">
+            <p>Hi! That's me. Always excited about **pseudo-deterministic computation**.</p>
+        </div>
+        
+        <div class="footer">
+            <p>In this vast Markov chain we call life, may your state transitions <span>always converge</span> to optimal solutions.</p>
+            <p>(Check your browser console for a surprise!)</p>
+        </div>
     </div>
-
-    <hr>
-
-    <h2>These are some of my earlier projects:</h2>
-
-    <div class="earlier-projects">
-        <ul>
-            <li><a href="https://github.com/LiyuZer/NeuroEvolution" target="_blank">NeuroEvolution</a></li>
-            <li><a href="https://github.com/LiyuZer/NBL-ML-Library-" target="_blank">Machine Learning Library</a></li>
-            <li><a href="https://github.com/LiyuZer/EcoEats" target="_blank">EcoEats</a></li>
-            <li><a href="https://github.com/stephanienguyen2020/iris" target="_blank">Iris</a></li>
-        </ul>
-    </div>
-
-    <h2>You can access my personal writings here ...</h2>
-
-    <div class="blogs">
-        <ul>
-            <li><a href="blog1.html">Blog 1</a></li>
-        </ul>
-    </div>
-
-    <hr>
-
-    <h2>About Me</h2>
-
-    <div class="image-section">
-        <img src="personal_img.jpg">
-        <p>Hi! That's me. Always excited to work on fascinating projects!</p>
-    </div>
-
-    <div class="footer">
-        <p>May the pseudo-deterministic universe be ever in your favor.</p>
-    </div>
-
+    
+    <script>
+        console.log("Welcome to the Automata Core, Fellow Researcher.");
+    </script>
 </body>
 </html>
