@@ -3,114 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liyu Zerihun's Portfolio</title>
+    <title>Liyu Zerihun Portfolio</title>
     <style>
         body {
-            background-color: #001f3f; /* Deep Space Blue */
-            color: white;
+            background-color: #22272a;  /* dark neutral grey */
+            color: #e2e4e6;
             font-family: 'Inter', Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
+            min-height: 100vh;
         }
-
         .container {
-            max-width: 900px;
-            padding: 20px;
+            max-width: 700px;
+            width: 100%;
+            padding: 40px 20px;
+            box-sizing: border-box;
         }
-
         h1, h2 {
-            color: #00aaff;
+            color: #85b8cb; /* muted blue-grey */
+            font-weight: 600;
         }
-
+        h1 {
+            margin-bottom: 16px;
+        }
+        h2 {
+            margin-top: 36px;
+            margin-bottom: 14px;
+            font-size: 1.3em;
+        }
         a {
-            color: #00aaff;
+            color: #6eb1d6;
             text-decoration: none;
-            transition: 0.3s;
+            border-bottom: 1px dotted #6eb1d6;
+            transition: color 0.2s;
         }
-
         a:hover {
-            text-decoration: underline;
-            color: #66c2ff;
+            color: #b3e5fc;
+            border-bottom: 1px solid #b3e5fc;
         }
-
-        .projects ul, .earlier-projects ul, .blogs ul {
-            list-style-type: none;
+        ul {
+            list-style: none;
             padding: 0;
+            margin: 0 0 12px 0;
         }
-
-        .projects li, .earlier-projects li, .blogs li {
-            background: rgba(255, 255, 255, 0.1);
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 8px;
-            transition: 0.3s;
+        li {
+            background: #272c30;
+            margin: 8px 0;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: background 0.2s;
         }
-
-        .projects li:hover, .earlier-projects li:hover, .blogs li:hover {
-            background: rgba(255, 255, 255, 0.2);
+        li:hover {
+            background: #32383d;
         }
-        
+        .image-section {
+            margin-top: 30px;
+        }
         .image-section img {
-            border: 3px solid #00aaff;
-            border-radius: 8px; 
-            max-width: 300px; 
+            border: 2px solid #85b8cb;
+            border-radius: 7px;
+            max-width: 180px;
             height: auto;
         }
-
         .footer {
             margin-top: 40px;
-            font-style: italic;
-            font-size: 14px;
-            color: #bbb;
-        }
-
-        .footer span {
-            color: #00ffcc;
+            font-size: 13px;
+            color: #889097;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Hello, humans!</h1>
-        <p>I am <strong>Liyu Zerihun</strong>, an undergrad at <strong>UCLA</strong>, studying <strong>Computer Science</strong>.</p>
-        <p>My passions lie in <strong>machine learning</strong>, <strong>automata theory</strong>, and building <strong>systems that persist beyond state transitions</strong>.</p>
+        <h1>Liyu Zerihun</h1>
+        <p>Undergraduate, Computer Science<br>
+           UCLA</p>
+        <p>Focus areas: Machine Learning, Automata Theory, Systems Design.</p>
         
-        <h2>Current Projects</h2>
-        <div class="projects">
-            <ul>
-                <li><strong><a href="https://github.com/LiyuZer/Automa">Automa</a></strong> - A programming language centered around computation through state transitions.</li>
-                <li><strong><a href="https://www.rituals.app/">Rituals</a></strong> - A lifestyle optimization app designed to help people form better habits.</li>
-            </ul>
-        </div>
+        <h2>Projects</h2>
+        <ul>
+            <li>
+                <a href="https://github.com/LiyuZer/Automa"><strong>Automa</strong></a> &mdash; Graph-based programming language for state transition computation.
+            </li>
+            <li>
+                <a href="https://www.rituals.app/"><strong>Rituals</strong></a> &mdash; App for tracking and improving daily habits.
+            </li>
+        </ul>
 
-        <h2>Earlier Work</h2>
-        <div class="earlier-projects">
-            <ul>
-                <li><a href="https://github.com/LiyuZer/NeuroEvolution">NeuroEvolution</a></li>
-                <li><a href="https://github.com/LiyuZer/NBL-ML-Library-">Machine Learning Library</a></li>
-                <li><a href="https://github.com/LiyuZer/EcoEats">EcoEats</a></li>
-                <li><a href="https://github.com/stephanienguyen2020/iris">Iris</a></li>
-            </ul>
-        </div>
+        <h2>Other Work</h2>
+        <ul>
+            <li><a href="https://github.com/LiyuZer/NeuroEvolution">NeuroEvolution</a></li>
+            <li><a href="https://github.com/LiyuZer/NBL-ML-Library-">Machine Learning Library</a></li>
+            <li><a href="https://github.com/LiyuZer/EcoEats">EcoEats</a></li>
+            <li><a href="https://github.com/stephanienguyen2020/iris">Iris</a></li>
+        </ul>
+
+        <h2>Writing</h2>
+        <ul>
+            <li><a href="blog1.html">On the Sisyphean Nature of Life</a></li>
+            <li><a href="blog2.html">A Graph-Based Programming Language</a></li>
+        </ul>
         
-        <h2>My Writings</h2>
-        <div class="blogs">
-            <ul>
-                <li><a href="blog1.html">Blog 1: On the Sisyphean Nature of Life</a></li>
-            </ul>
-            <ul>
-                <li><a href="blog2.html">Blog 2: A Graph-Based Programming Language</a></li>
-            </ul>
-        </div>
-        
-        <h2>About Me</h2>
+        <h2>About</h2>
         <div class="image-section">
             <img src="personal_img.jpg" alt="Liyu Zerihun">
-            <p>Hi! That's me. May the pseudo-deterministic universe be in your favor!</p>
+        </div>
+        <div class="footer">
+            &copy; 2025 Liyu Zerihun
         </div>
     </div>
 </body>
