@@ -6,40 +6,47 @@
     <title>A Graph-Based Programming Language</title>
     <style>
         body {
-            background-color: #001f3f; /* Deep Space Blue */
-            color: white;
+            background-color: #22272a;
+            color: #e2e4e6;
             font-family: 'Inter', Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
         }
-
         .container {
-            max-width: 900px;
-            padding: 20px;
+            max-width: 750px;
+            width: 100%;
+            padding: 40px 24px 24px 24px;
+            box-sizing: border-box;
         }
-
         h1, h2 {
-            color: #00aaff;
+            color: #85b8cb;
+            font-weight: 600;
         }
-
+        h1 {
+            margin-bottom: 18px;
+        }
+        h2 {
+            margin-top: 30px;
+            margin-bottom: 12px;
+            font-size: 1.15em;
+        }
         p {
-            line-height: 1.6;
-            text-align: justify;
+            line-height: 1.65;
+            text-align: left;
         }
-
         .footer {
             margin-top: 40px;
-            font-style: italic;
             font-size: 14px;
-            color: #bbb;
+            color: #889097;
+            text-align: center;
+            font-style: italic;
         }
-
         .footer span {
-            color: #00ffcc;
+            color: #6eb1d6;
+            font-style: normal;
         }
     </style>
 </head>
@@ -47,40 +54,36 @@
     <div class="container">
         <h1>A Graph-Based Programming Language</h1>
 
-        <p>I have always wanted to create things. Since childhood, I have felt a deep urge to build something greater than myself, to exist in a world of my own creation. The desire to construct, to iterate over my own ideas and concepts, has always driven me. However, in my younger years, I often felt frustrated by my lack of technical understanding. How could I create when I barely understood the world around me?</p>
+        <p>
+            I’ve always wanted to create things. Since childhood, the urge to build and understand systems has motivated me. As my technical knowledge grew, I began exploring how programs and abstractions are constructed at a fundamental level.
+        </p>
 
-        <p>Not that one can ever fully understand the world, but knowledge, even in fragments, provides a foundation for creation. Over time, as I have learned more, I have begun to see glimpses of how things work, allowing me to channel that childhood desire into something tangible.</p>
+        <h2>Motivation</h2>
+        <p>
+            This drive led me to <strong>Automa</strong>, a language centered on graph-based computation. The idea came while writing code to match regular expressions using state machines. I realized that constructing and running automata should be more intuitive, and that most general-purpose languages are not well suited for expressing such systems directly.
+        </p>
 
-        <h2>The Motivation for Automa</h2>
-        <p>This persistent urge to create led me to conceive <strong>Automa</strong>, a programming language grounded in graph-based computation. The idea first struck me while solving a programming problem with a friend. We were implementing a function that took in text and verified if it matched a regex expression. I recall thinking—wouldn't it be intuitive to construct an NFA to traverse and validate the pattern?</p>
+        <h2>Core Idea</h2>
+        <p>
+            At its core, a Turing machine—or any automaton—is just a set of states and transitions. Why not create a language that makes the structure of these machines explicit and programmable, with graphs as a first-class model?
+        </p>
 
-        <p>While attempting to implement this in Python, I found the process tedious. Manually creating nodes, defining transitions, and setting conditions in a language not optimized for such a task felt cumbersome. This inefficiency lingered in my mind for a long time. After all, at its core, a Turing machine is a finite automaton—finite states that transition given some diagram. Why not create a programming language where state machines could be dynamically represented as graphs?</p>
+        <h2>Concepts</h2>
+        <p>
+            The distinction between deterministic and non-deterministic computation became central to my thinking. Non-deterministic simulations can explore many paths; adding memory yields more powerful machines like pushdown automata and Turing machines. In a programming context, this allows for modeling computation where state, memory, and logic are fully explicit.
+        </p>
 
-        <h2>The Epiphany</h2>
-        <p>During a quiet work session in the library, it finally clicked. I could build a language tailored for constructing and running finite state machines as graphs. The realization was exhilarating but daunting—where would I even begin?</p>
+        <h2>Vision</h2>
+        <p>
+            My goal for Automa is to provide a unified way to express computations as state machines, supporting features like non-deterministic execution, memory, and clear guarantees on program behavior. The ambition is to make automata not just a theoretical tool, but a practical programming model.
+        </p>
 
-        <p>I started researching similar concepts and consulting every resource I could find (including the almighty pretrained transformer). I knew what I wanted: a language where finite state machines formed the fundamental structure, faithfully adhering to automata theory while remaining practical.</p>
-
-        <h2>Core Concepts</h2>
-        <p>A recurring theme that fascinated me was the contrast between deterministic and non-deterministic computation. Given a graph G, a non-deterministic simulation could explore multiple paths in parallel, identifying viable transitions dynamically. Adding memory to finite state machines also intrigued me—pushdown automata, for instance, are NFAs augmented with a stack interface, while Turing machines introduce a tape-based memory interaction.</p>
-
-        <p>Beyond theoretical applications, these machines could model classical algorithms, storing the computational result within memory. Given an input K, a state machine could carry out the computation and preserve the residual state—a compelling and elegant approach.</p>
-
-        <h2>Bringing It All Together</h2>
-        <p>My goal with Automa is to integrate these concepts into a single, cohesive language—one that enables programming through state machines with well-defined guarantees. I envision writing entire programs in a state-machine paradigm, seamlessly blending acceptance conditions, non-deterministic path exploration, and graph-based logic.</p>
-
-        <p>It will take time to bring this vision to reality, but I am determined to see it through. This project is more than just a language—it is a personal challenge, a manifestation of the creative urge that has driven me since childhood.</p>
-
-        <p>I'll end it here. The journey continues.</p>
+        <p>
+            The project is ongoing and ambitious, but I’m committed to developing it further. This is both a technical and personal challenge: building a system from the ground up, rooted in the principles that first inspired me.
+        </p>
     </div>
-
     <div class="footer">
-        <p>In this vast Markov chain we call life, may your state transitions <span>always converge</span> to optimal solutions.</p>
-        <p>(Check your browser console for a surprise!)</p>
+        In this Markov chain we call life, may your state transitions <span>converge</span> to good solutions.
     </div>
-
-    <script>
-        console.log("Welcome to the Automata Core, Fellow Thinker.");
-    </script>
 </body>
 </html>
