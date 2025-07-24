@@ -48,7 +48,22 @@
             transition: background 0.2s;
         }
         li:hover { background: #32383d; }
-        .image-section { margin-top: 30px; }
+        .profile-row {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            margin-top: 36px;
+            margin-bottom: 20px;
+            gap: 32px;
+        }
+        .about-section {
+            flex: 1 1 280px;
+            min-width: 210px;
+        }
+        .image-section {
+            margin-top: 16px;
+            margin-bottom: 10px;
+        }
         .image-section img {
             border: 2px solid #85b8cb;
             border-radius: 7px;
@@ -60,22 +75,25 @@
             color: #d4eefc;
             border-left: 5px solid #85b8cb;
             border-radius: 14px;
-            padding: 22px 26px 18px 22px;
-            margin: 0 0 24px 34px;
-            max-width: 340px;
-            float: right;
+            padding: 22px 22px 18px 22px;
+            max-width: 310px;
             font-size: 1.05em;
             box-shadow: 0 2px 12px rgba(0,0,0,0.13);
             transition: box-shadow 0.2s;
+            flex: 1 1 220px;
+            margin-top: 0;
         }
         .aside-box:hover {
             box-shadow: 0 4px 20px rgba(38, 163, 255, 0.06);
         }
         @media (max-width: 900px) {
+            .profile-row {
+                flex-direction: column;
+                gap: 0;
+            }
             .aside-box {
-                float: none;
-                margin: 24px 0 0 0;
                 max-width: 100%;
+                margin-top: 22px;
             }
         }
         .footer {
@@ -95,8 +113,8 @@
 
         <h2>Projects</h2>
         <ul>
-            <li><a href="https://github.com/LiyuZer/Automa"><strong>Automa</strong></a> &mdash; graph-based programming language for state transition computation</li>
-            <li><a href="https://www.rituals.app/"><strong>Rituals</strong></a> &mdash; app for tracking and improving daily habits</li>
+            <li><a href="https://github.com/LiyuZer/Automa"><strong>Automa</strong></a> graph-based programming language for state transition computation</li>
+            <li><a href="https://www.rituals.app/"><strong>Rituals</strong></a> app for tracking and improving daily habits</li>
         </ul>
 
         <h2>Other Work</h2>
@@ -119,25 +137,28 @@
             <li><a href="goals.html">My Guiding Questions and Ambitions</a></li>
         </ul>
 
-        <h2>About</h2>
-        <p style="line-height:1.6">
-            If I had to sum up my purpose in a single line, it would be this:
-            I try to make sense of existence through mathematics.
-            Math is not just a tool for me, it is a creative medium for thought expression.
-        </p>
-        <div class="image-section">
-            <img src="personal_img.jpg" alt="Liyu Zerihun">
-        </div>
-
-        <div class="aside-box">
-            <strong>The Snowball Criterion</strong>
-            <p style="margin:0; font-style:italic; line-height:1.7;">
-                True intelligence reveals itself when a system can design and create a successor more intelligent than itself.
-                This ability for recursive improvement, where a system surpasses its own boundaries, is the ultimate test for advanced intelligence in my view.
-                Although we have seen remarkable progress in narrow fields, no general artificial intelligence has fully reached this standard yet.
-            </p>
-            <div style="font-size:0.93em; margin-top:10px; color:#88b7c5;">
-                This idea shapes my research and guides the questions I ask about computation, intelligence, and the future.
+        <div class="profile-row">
+            <div class="about-section">
+                <h2>About</h2>
+                <p style="line-height:1.6">
+                    If I had to sum up my purpose in a single line, it would be this:
+                    I try to make sense of existence through mathematics.
+                    Math is not just a tool for me, it is a creative medium for thought expression.
+                </p>
+                <div class="image-section">
+                    <img src="personal_img.jpg" alt="Liyu Zerihun">
+                </div>
+            </div>
+            <div class="aside-box">
+                <strong>The Snowball Criterion</strong>
+                <p style="margin:0; font-style:italic; line-height:1.7;">
+                    True intelligence reveals itself when a system can design and create a successor more intelligent than itself.
+                    This ability for recursive improvement, where a system surpasses its own boundaries, is the ultimate test for advanced intelligence in my view.
+                    Although we have seen remarkable progress in narrow fields, no general artificial intelligence has fully reached this standard yet.
+                </p>
+                <div style="font-size:0.93em; margin-top:10px; color:#88b7c5;">
+                    This idea shapes my research and guides the questions I ask about computation, intelligence, and the future.
+                </div>
             </div>
         </div>
 
