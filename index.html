@@ -61,6 +61,29 @@
             color: #889097;
             text-align: center;
         }
+        .aside-box {
+            background: #20262b;
+            color: #d4eefc;
+            border-left: 5px solid #85b8cb;
+            border-radius: 14px;
+            padding: 22px 26px 18px 22px;
+            margin: 40px 0 0 34px;
+            max-width: 350px;
+            float: right;
+            font-size: 1.05em;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+            transition: box-shadow 0.2s;
+        }
+        .aside-box:hover {
+            box-shadow: 0 4px 20px rgba(38, 163, 255, 0.06);
+        }
+        @media (max-width: 900px) {
+            .aside-box {
+                float: none;
+                margin: 28px 0 0 0;
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -72,8 +95,8 @@
 
         <h2>Projects</h2>
         <ul>
-            <li><a href="https://github.com/LiyuZer/Automa"><strong>Automa</strong></a> &mdash; graph-based programming language for state-transition computation</li>
-            <li><a href="https://www.rituals.app/"><strong>Rituals</strong></a> &mdash; app for tracking and improving daily habits</li>
+            <li><a href="https://github.com/LiyuZer/Automa"><strong>Automa</strong></a> graph-based programming language for state-transition computation</li>
+            <li><a href="https://www.rituals.app/"><strong>Rituals</strong></a> app for tracking and improving daily habits</li>
         </ul>
 
         <h2>Other Work</h2>
@@ -91,7 +114,6 @@
             <li><a href="blog3.html">Snowball Criterion</a></li>
         </ul>
 
-        <!-- NEW: link to Life Goals page -->
         <h2>Life Goals</h2>
         <ul>
             <li><a href="goals.html">My Guiding Questions and Ambitions</a></li>
@@ -105,6 +127,17 @@
         </p>
         <div class="image-section">
             <img src="personal_img.jpg" alt="Liyu Zerihun">
+        </div>
+        <div class="aside-box">
+            <strong>The Snowball Criterion</strong>
+            <p style="margin:0; font-style:italic; line-height:1.7;">
+                True intelligence reveals itself when a system can design and create a successor more intelligent than itself. 
+                This capacity for recursive improvement—a system outgrowing its own boundaries—is, to me, the ultimate test for advanced intelligence.
+                While narrow progress exists in specific domains, no general artificial intelligence has fully realized this standard yet.
+            </p>
+            <div style="font-size:0.93em; margin-top:10px; color:#88b7c5;">
+                This idea shapes my research and guides the questions I ask about computation, intelligence, and the future.
+            </div>
         </div>
 
         <div class="footer">
