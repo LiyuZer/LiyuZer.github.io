@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alignment by Proof: An Alternative Method</title>
+    <style>
+        body {
+            background-color: #22272a;
+            color: #e2e4e6;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 750px;
+            width: 100%;
+            padding: 40px 24px 24px 24px;
+            box-sizing: border-box;
+        }
+        h1, h2, h3 {
+            color: #85b8cb;
+            font-weight: 600;
+        }
+        h1 {
+            margin-bottom: 18px;
+        }
+        h2 {
+            margin-top: 34px;
+            margin-bottom: 14px;
+            font-size: 1.15em;
+        }
+        h3 {
+            margin-top: 26px;
+            margin-bottom: 8px;
+            font-size: 1.08em;
+        }
+        p, ul {
+            line-height: 1.65;
+            text-align: left;
+        }
+        ul {
+            margin: 0 0 12px 18px;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #889097;
+            text-align: center;
+            font-style: italic;
+        }
+        .block {
+            background: #23282c;
+            border-left: 4px solid #85b8cb;
+            padding: 12px 18px;
+            margin: 18px 0;
+            font-size: 1em;
+            color: #a0a6ac;
+        }
+        code {
+            color: #85b8cb;
+            background: #1c2022;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.97em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Alignment by Proof: An Alternative Method</h1>
+
+        <p>
+            State-of-the-art models today have two training phases: <strong>pre-training</strong> and <strong>post-training</strong>. The two serve different purposes, but together, they produce AI that both knows what we want and, to some extent, does what we want.
+        </p>
+
+        <h2>How GPT Works (Brief Overview)</h2>
+
+        <p>
+            For readers unfamiliar with how GPT works, here's a very brief overview. GPT, which stands for <em>Generative Pre-Training Transformer</em>, is a family of large neural networks based on the Transformer architecture. These models are <strong>auto-regressive</strong>: at each step, they output a probability distribution, sample from it, and use the sample in the next prediction.
+        </p>
+
+        <div class="block">
+            <strong>Example:</strong> "The big brown fox jumped over the fence."
+            <br><br>
+            <strong>Phase 1: Tokenization.</strong> The input sentence is tokenized into pieces mapped to a dictionary. If "fox" is token 452, we have a vector with a 1 at index 452. This becomes a word embedding—a higher-dimensional vector encoding richer meaning.
+            <br><br>
+            <strong>Phase 2: Attention &amp; Forward Propagation.</strong> These embeddings are processed by attention blocks. Each token is updated by aggregating information from tokens it is most related to—allowing the model to "pay attention" to the important parts for each word.
+            <br><br>
+            <strong>Phase 3: Sampling.</strong> Decoder-based transformers work in an autoregressive fashion: input the first word, predict the second, input both to predict the third, and so on. The model produces a probability distribution for the next token; we sample from this distribution.
+        </div>
+
+        <p>
+            Both pre-training and post-training share this core process. Here’s where they diverge:
+        </p>
+        <ul>
+            <li>
+                <strong>Pre-training:</strong> The model learns the distribution of human text via next-token prediction—akin to reading the textbook cover-to-cover.
+            </li>
+            <li>
+                <strong>Post-training:</strong> The pre-trained model isn't ready for use—it must be <em>aligned</em> with our values. To do this, a smaller model is trained on human-evaluated outputs, assigning rewards to text. This <strong>reward model</strong> then trains the larger model (via RLHF) to output text it finds rewarding.
+            </li>
+        </ul>
+
+        <h2>The Growing Cracks in Current Alignment</h2>
+        <p>
+            Today’s models output tokens that often align with our goals, but as we look forward, two main problems emerge:
+        </p>
+        <ul>
+            <li>
+                <strong>Scale.</strong> As models grow, so must the reward models. Large models might outpace their aligners, leading to misalignment. As size increases, it's harder to guarantee reliable alignment.
+            </li>
+            <li>
+                <strong>Interpretability.</strong> The reward function is a black box: a learned set of weights, opaque and difficult to inspect or debug.
+            </li>
+        </ul>
+
+        <p>
+            These limitations suggest we need a fundamentally different approach. The current paradigm treats alignment as an optimization problem—finding the right reward signal to guide behavior. But what if the issue isn’t about rewards at all? What if the real problem is that we have no way to <em>verify</em> whether our models are reasoning correctly?
+        </p>
+
+        <h2>A Different Framework: From Rewards to Reasoning</h2>
+        <p>
+            Today, when a model answers a question, we might evaluate the quality by human preference, but we have no insight into its reasoning. The model could hallucinate, make logical errors, or even intentionally mislead—and we might not realize until much later. As models become more capable, this opacity is dangerous; we're essentially flying blind.
+        </p>
+        <p>
+            Instead of asking “How do we reward good behavior?”, perhaps we should ask, “How do we <em>verify</em> correct reasoning?” In mathematics, we accept proofs because they follow valid logical steps from axioms—not because they feel right. In courts, we require evidence and logic that withstands scrutiny. In science, we demand reproducible evidence and methodology. Why shouldn’t AI be held to the same standard?
+        </p>
+
+        <h2>Alignment by Proof: A New Approach</h2>
+        <p>
+            What if we reframed the alignment problem—not as a lack of alignment, but as a lack of <strong>proof</strong>? Currently, we have no guarantee that a model’s output is tethered to reality. It may hallucinate, fabricate, or mislead; we can’t verify its reasoning.
+        </p>
+        <p>
+            Imagine a world where AI doesn't just output answers, but outputs <strong>proofs</strong> for its statements—a chain of reasoning, similar to what mathematicians use with Lean or other proof assistants. The AI would be required to establish its claims using a transparent, verifiable proof engine.
+        </p>
+        <p>
+            This engine could combine probabilistic reasoning (Bayesian networks, causal models) with formal proof systems, forming a “reality prover”—an engine that can validate deductions in a transparent, checkable way.
+        </p>
+        <div class="block">
+            <strong>Concrete example:</strong>  
+            Suppose you ask: “Did the assassination of Archduke Ferdinand directly lead to World War I?”  
+            <br><br>
+            With proof-based alignment, the AI wouldn't just write an essay. It would generate a formal proof showing: <br>
+            &bull; What historical evidence it draws from<br>
+            &bull; The causal reasoning connecting the assassination to the war<br>
+            &bull; The logical steps supporting or weakening alternate explanations<br>
+            &bull; Confidence and uncertainty at each step<br>
+            This proof could then be run through a checker to verify that each step follows logically and is properly supported by evidence.
+        </div>
+        <p>
+            Projects like Cyc tried something similar with hand-built logic, but LLMs might be able to generate, evolve, and refine these proof engines much faster and more broadly than any manual approach.
+        </p>
+
+        <h2>The Promise of Provable Alignment</h2>
+        <ul>
+            <li>
+                <strong>Scalability.</strong> As the proof engine validates more statements, it becomes harder to fool. A discrete, formal engine can be kept relatively small and auditable—like Lean—while verifying the reasoning of much larger models.
+            </li>
+            <li>
+                <strong>Interpretability.</strong> The proofs are code! Even if humans didn’t write the original reasoning engine, we can inspect, study, and validate both the proofs and the inference rules.
+            </li>
+            <li>
+                <strong>Meta-reasoning.</strong> We could prove things about the proof engine itself and about the AI’s reasoning process. Even complex principles like fairness or compassion, while not binary, might be representable in a probabilistic or axiomatic form for formal verification.
+            </li>
+        </ul>
+
+        <p>
+            This mirrors how we align human reasoning in high-stakes situations: courts require evidence and logical argument; academia demands peer review; engineering requires verifiable calculations. By requiring AI systems to show their work in a formally verifiable way, we move from alignment by reward to alignment by <strong>proof</strong> and <strong>verification</strong>.
+        </p>
+
+        <h2>Looking Forward</h2>
+        <p>
+            The technical challenges are significant. We must develop proof systems that are rigorous enough to prevent deception and flexible enough to handle real-world uncertainty. We need to ground formal proofs in empirical evidence and ensure that proof engines cannot be gamed by sophisticated models.
+        </p>
+        <p>
+            But the potential payoff is enormous. By reframing alignment as a problem of proof rather than reward, we gain scalability, interpretability, and the ability to formally reason about AI behavior. This is a method that could, in principle, help align not just today's models, but superintelligent systems in the future.
+        </p>
+        <p>
+            After all, if we're going to trust AI with increasingly important decisions, shouldn't we be able to verify that their reasoning is sound?
+        </p>
+
+        <div class="footer">
+            &copy; 2025 &mdash; Alignment by Proof Essay
+        </div>
+    </div>
+</body>
+</html>
+
