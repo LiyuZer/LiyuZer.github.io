@@ -1,0 +1,140 @@
+/* Matrix Super Theme - minimal, subtle, and accessible */
+:root{
+  --matrix-bg:#050805;
+  --matrix-panel:rgba(0,255,65,0.05);
+  --matrix-border:rgba(0,255,65,0.25);
+  --matrix-green:#00ff41; /* classic */
+  --matrix-green-dim:#00d338;
+  --matrix-text:#cfead7;
+  --matrix-muted:#86cfa1;
+  --matrix-shadow:0 0 12px rgba(0,255,65,0.08);
+}
+
+/* Base reset that only applies when .matrix is on body */
+body.matrix{
+  margin:0;
+  background: radial-gradient(1200px 600px at 15% -10%, rgba(0,255,65,0.08), transparent 55%),
+              radial-gradient(900px 500px at 90% 0%, rgba(0,255,65,0.05), transparent 60%),
+              var(--matrix-bg);
+  color:var(--matrix-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  line-height:1.65;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Enhance selection */
+body.matrix ::selection{background:rgba(0,255,65,0.25); color:#eaffef}
+
+/* Layout container, keep widths but add subtle panel feel */
+body.matrix .container{
+  max-width: 800px;
+  box-sizing:border-box;
+  background: linear-gradient(180deg, rgba(0,255,65,0.03), rgba(0,255,65,0.01));
+  border:1px solid var(--matrix-border);
+  border-radius:12px;
+  box-shadow: var(--matrix-shadow);
+}
+
+/* Typography */
+body.matrix h1, body.matrix h2, body.matrix h3{
+  color:var(--matrix-green);
+  letter-spacing:0.02em;
+  text-shadow: 0 0 6px rgba(0,255,65,0.25);
+}
+
+/* Gentle glow pulse for main title only */
+body.matrix h1{
+  animation: glowPulse 6s ease-in-out infinite;
+}
+@keyframes glowPulse{ 0%,100%{ text-shadow:0 0 6px rgba(0,255,65,0.18)} 50%{ text-shadow:0 0 12px rgba(0,255,65,0.35)} }
+
+/* Links */
+body.matrix a{
+  color:var(--matrix-green);
+  border-bottom: 1px dotted rgba(0,255,65,0.6);
+  text-decoration:none;
+  transition: color .18s ease, border-color .18s ease, text-shadow .18s ease;
+}
+body.matrix a:hover{
+  color:#b8ffca;
+  border-bottom-color: rgba(0,255,65,0.9);
+  text-shadow:0 0 6px rgba(0,255,65,0.35);
+}
+
+/* Lists and items */
+body.matrix ul{ list-style: none; padding:0; margin:0 0 12px 0; }
+body.matrix li{
+  background: transparent; /* override prior site styles */
+  margin: 8px 0;
+  padding: 10px 14px;
+  border-left:3px solid rgba(0,255,65,0.35);
+  border-radius: 6px;
+  transition: background .18s ease, border-color .18s ease;
+}
+body.matrix li:hover{ background: var(--matrix-panel); border-left-color: var(--matrix-green); }
+
+/* Cards/aside */
+body.matrix .aside-box{
+  background: rgba(0,255,65,0.03);
+  color: var(--matrix-text);
+  border-left: 5px solid var(--matrix-green);
+  border-radius: 12px;
+  box-shadow: var(--matrix-shadow);
+}
+body.matrix .aside-box:hover{
+  box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 24px rgba(0,255,65,0.08);
+}
+
+/* Images */
+body.matrix .image-section img{
+  border: 2px solid var(--matrix-green);
+  border-radius: 8px;
+  box-shadow: 0 0 14px rgba(0,255,65,0.15);
+}
+
+/* Footer */
+body.matrix .footer{ color: var(--matrix-muted); opacity: 0.9; }
+
+/* Horizontal rules, code, etc. */
+body.matrix hr{ border:0; height:1px; background:linear-gradient(90deg, rgba(0,255,65,0), rgba(0,255,65,0.45), rgba(0,255,65,0)); }
+body.matrix code, body.matrix pre{
+  background: rgba(0,255,65,0.07);
+  color: #e7ffef;
+  border:1px solid rgba(0,255,65,0.2);
+  border-radius:8px;
+}
+body.matrix code{ padding: 0.15em 0.35em; }
+body.matrix pre{ padding: 12px; overflow:auto; }
+
+/* Tables (if any) */
+body.matrix table{ border-collapse: collapse; width:100%; }
+body.matrix th, body.matrix td{ border:1px solid rgba(0,255,65,0.25); padding:8px 10px; }
+body.matrix th{ background: rgba(0,255,65,0.08); color:#dfffe9; }
+
+/* Scrollbar (WebKit/Blink) */
+body.matrix ::-webkit-scrollbar{ width: 10px; height: 10px; }
+body.matrix ::-webkit-scrollbar-track{ background: rgba(0,255,65,0.04); }
+body.matrix ::-webkit-scrollbar-thumb{ background: rgba(0,255,65,0.45); border-radius:8px; }
+body.matrix ::-webkit-scrollbar-thumb:hover{ background: rgba(0,255,65,0.7); }
+
+/* Page variant: home gets gentle emphasis */
+body.matrix.matrix-home .container{ border-color: rgba(0,255,65,0.35); }
+body.matrix.matrix-home h2{ color:#83ff9e; }
+
+/* Optional Matrix rain overlay (enabled via .matrix-rain on body) */
+body.matrix.matrix-rain{ overflow-x:hidden; }
+.matrix-rain-canvas{
+  position: fixed; inset: 0; width:100%; height:100%; pointer-events:none; z-index:0;
+  opacity: 0.18; mix-blend-mode: screen; /* subtle */
+}
+/* Ensure content sits above canvas */
+body.matrix .container, body.matrix header, body.matrix main, body.matrix footer{ position: relative; z-index: 1; }
+
+/* Subtle scanline shimmer on hoverable cards/items */
+@keyframes scan{ from{ background-position:0 0 } to{ background-position:0 12px } }
+body.matrix li:hover, body.matrix .aside-box:hover{
+  background-image: repeating-linear-gradient( to bottom, rgba(0,255,65,0.06), rgba(0,255,65,0.06) 1px, transparent 1px, transparent 12px );
+  animation: scan 1.8s linear infinite;
+}
