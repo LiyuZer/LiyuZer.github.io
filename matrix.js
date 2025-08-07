@@ -1,90 +1,95 @@
-/* Lightweight Matrix rain effect (optional). Enabled when <body> has class "matrix-rain" */
+/* Lightweight Matrix rain overlay. Activates when body has class "matrix-rain". */
 (function(){
-  const start = () => {
-    const body = document.body;
-    if (!body || !body.classList.contains('matrix-rain')) return;
+  function ensureThemeLink(){
+    // If theme.css isn't linked, inject it (helps pages missing the <link>)
+    var has = Array.from(document.styleSheets || []).some(function(ss){
+      try { return (ss.href||'').endsWith('theme.css'); } catch(e){ return false; }
+    });
+    if(!has){
+      var existing = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+        .some(function(l){ return (l.getAttribute('href')||'').indexOf('theme.css') !== -1; });
+      if(!existing){
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'theme.css';
+        document.head && document.head.appendChild(link);
+      }
+    }
+  }
 
-    const canvas = document.createElement('canvas');
+  function initRain(){
+    var body = document.body;
+    if(!body || !body.classList.contains('matrix-rain')) return;
+    if(document.querySelector('.matrix-rain-canvas')) return; // prevent duplicates
+
+    var canvas = document.createElement('canvas');
     canvas.className = 'matrix-rain-canvas';
-    canvas.setAttribute('aria-hidden','true');
-    document.body.prepend(canvas);
+    var ctx = canvas.getContext('2d');
+    document.body.appendChild(canvas);
 
-    const ctx = canvas.getContext('2d');
-    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    var dpr = Math.max(window.devicePixelRatio || 1, 1);
+    var width = 0, height = 0;
+    var fontSize = 16; // CSS px
+    var cols = 0;
+    var drops = [];
+    var running = true;
 
-    let width = 0, height = 0;
-    let fontSize = 16; // base font size; will scale with DPR
-    let columns = 0;
-    let drops = [];
-    const chars = 'アカサタナハマヤラワ012345789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz<>[]{}/*+-=|';
+    var glyphs = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789-=+*<>|';
 
-    const resize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
+    function resize(){
+      width = Math.floor(window.innerWidth);
+      height = Math.floor(window.innerHeight);
       canvas.style.width = width + 'px';
       canvas.style.height = height + 'px';
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
       ctx.setTransform(dpr,0,0,dpr,0,0);
-      fontSize = Math.max(14, Math.min(22, Math.round(width / 80))); // adaptive
-      columns = Math.floor(width / fontSize);
-      drops = Array.from({length: columns}, () => Math.floor(Math.random() * -20));
-      ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
-    };
+      ctx.font = fontSize + 'px monospace';
+      cols = Math.ceil(width / fontSize);
+      drops = new Array(cols);
+      for(var i=0;i<cols;i++) drops[i] = Math.floor(Math.random()*height/fontSize);
+    }
 
-    const clearTrail = () => {
-      // translucent fill to create trailing effect
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
-      ctx.fillRect(0, 0, width, height);
-    };
+    function randGlyph(){
+      return glyphs.charAt(Math.floor(Math.random()*glyphs.length));
+    }
 
-    const draw = () => {
-      if (document.hidden) return; // pause when not visible
-      clearTrail();
-      for (let i = 0; i < drops.length; i++) {
-        const text = chars[(Math.random() * chars.length) | 0];
-        const x = i * fontSize;
-        const y = drops[i] * fontSize;
-        // glow effect
-        ctx.shadowColor = 'rgba(0,255,65,0.35)';
-        ctx.shadowBlur = 10;
-        ctx.fillStyle = '#00ff41';
-        ctx.fillText(text, x, y);
-        // occasionally reset drop to top when off screen
-        if (y > height && Math.random() > 0.975) {
-          drops[i] = Math.floor(Math.random() * -20);
+    var last = 0; var interval = 1000/28; // ~28fps for subtle motion
+    function frame(ts){
+      if(!running){ requestAnimationFrame(frame); return; }
+      if(!last) last = ts;
+      var delta = ts - last;
+      if(delta < interval){ requestAnimationFrame(frame); return; }
+      last = ts;
+
+      // Fade the canvas slightly to create trails
+      ctx.fillStyle = 'rgba(0,0,0,0.08)';
+      ctx.fillRect(0,0,width,height);
+
+      ctx.fillStyle = '#00ff41';
+      for(var i=0;i<cols;i++){
+        var x = i * fontSize;
+        var y = drops[i] * fontSize;
+        ctx.fillText(randGlyph(), x, y);
+
+        if(y > height && Math.random() > 0.975){
+          drops[i] = 0;
+        } else {
+          drops[i] += 1;
         }
-        drops[i] += 1; // speed
       }
-    };
+      requestAnimationFrame(frame);
+    }
 
-    let rafId;
-    const loop = () => {
-      draw();
-      rafId = requestAnimationFrame(loop);
-    };
-
-    const onVis = () => {
-      if (document.hidden) return;
-      if (!rafId) loop();
-    };
+    window.addEventListener('resize', resize);
+    document.addEventListener('visibilitychange', function(){ running = (document.visibilityState !== 'hidden'); });
 
     resize();
-    loop();
-    window.addEventListener('resize', resize);
-    document.addEventListener('visibilitychange', onVis);
-
-    // Clean-up on page unload (not strictly necessary in static sites)
-    window.addEventListener('beforeunload', () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener('resize', resize);
-      document.removeEventListener('visibilitychange', onVis);
-    });
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start);
-  } else {
-    start();
+    requestAnimationFrame(frame);
   }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    try { ensureThemeLink(); } catch(e){}
+    try { initRain(); } catch(e){}
+  });
 })();
