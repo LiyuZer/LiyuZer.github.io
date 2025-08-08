@@ -1,103 +1,97 @@
-/* Light Tree Theme - gentle light-blue background with a slowly growing green tree
-   This theme replaces the previous dark matrix theme. It keeps the site's structural
-   classes (.container, .footer, etc.) compatible but adjusts colors and layering.
+/* Fractal Dark Theme - modern readable palette with subtle animated fractal background.
+   This CSS preserves existing structural classes (.container, .footer, etc.) so HTML pages
+   continue to work without modification. The decorative fractal background is injected
+   by matrix.js when --site-theme is "fractal". Colors chosen for high contrast and legibility.
 */
 :root{
-  --site-theme: tree; /* detected by matrix.js to inject the tree */
-  --bg: #f7fbff;           /* very light blue, closer to white */
-  --panel: rgba(255,255,255,0.85);
-  --panel-border: rgba(34,115,34,0.06);
-  --tree-green: #2b8f3a;   /* primary tree green */
-  --tree-leaf: #66b76a;
-  --text: #0f2130;         /* dark text for contrast */
-  --muted: #5d7b86;
-  --shadow: 0 6px 22px rgba(33,60,40,0.06);
+  --site-theme: fractal; /* detected by matrix.js */
+  --bg: #07101a;           /* deep navy/teal base */
+  --panel: rgba(10,18,24,0.76); /* translucent panels above fractal */
+  --panel-border: rgba(255,255,255,0.04);
+  --accent: #4fe0c1;      /* primary accent (teal) */
+  --accent-2: #7bdcff;    /* secondary accent (soft cyan) */
+  --text: #e6eef6;        /* near-white readable text */
+  --muted: #98a7b3;       /* muted text */
+  --shadow: 0 10px 30px rgba(3,10,14,0.55);
   --radius: 12px;
-  --max-width: 900px;
+  --max-width: 960px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
 }
 
-/* Page base */
 html,body{ height:100%; }
 body{
   margin:0;
   background: var(--bg);
-  color:var(--text);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  line-height:1.6;
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  line-height:1.6;
   -webkit-text-size-adjust:100%;
   text-rendering:optimizeLegibility;
   overflow-x: hidden;
   position: relative;
+  min-height: 100vh;
 }
 
-/* Ensure the decorative tree sits under content */
-#site-tree, #growing-tree{ position: fixed; bottom: 0; left: 6vw; z-index: 0; pointer-events: none; }
+/* Decorative fractal container (injected by matrix.js) */
+#fractal-bg{ position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.95; }
+#fractal-bg svg{ width: 100vw; height: 100vh; display:block; }
 
-/* Keep existing container classes but with light panel */
+/* Keep content above decorative background */
 .container{
   max-width: var(--max-width);
-  margin: 36px auto;
-  padding: 34px 24px;
+  margin: 40px auto;
+  padding: 34px 28px;
   background: var(--panel);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   border: 1px solid var(--panel-border);
-  position: relative; /* keeps it above decorative elements */
+  position: relative; /* above decorative elements */
   z-index: 2;
   box-sizing: border-box;
 }
 
 /* Headings */
 h1, h2, h3{
-  color: var(--tree-green);
+  color: var(--accent);
   margin: 0 0 12px 0;
   font-weight: 700;
 }
-h1{ font-size: 1.9rem; }
+h1{ font-size: 1.95rem; }
 h2{ font-size: 1.25rem; }
 
 p, li, span, a{ color: var(--text); }
 
 /* Links */
-a{ color: var(--tree-green); text-decoration: underline; text-underline-offset: 3px; }
-a:hover{ color: #1f6f2a; }
+a{ color: var(--accent-2); text-decoration: none; border-bottom: 1px dotted rgba(123,220,255,0.17); }
+a:hover{ color: var(--accent); border-bottom-style: solid; }
 
 /* Lists and blocks */
 ul{ padding-left: 18px; }
 li{ margin: 8px 0; }
-.block, .aside-box{ background: rgba(44,125,62,0.04); border-left:4px solid var(--tree-green); padding: 12px 16px; border-radius:10px; }
+.block, .aside-box{ background: rgba(79,224,193,0.04); border-left:4px solid var(--accent); padding: 12px 16px; border-radius:10px; }
 
 /* Footer */
 .footer{ color: var(--muted); font-size: 0.95rem; margin-top: 26px; }
 
 /* Code and pre */
-code, pre{ background: rgba(15,33,48,0.04); color: var(--text); border-radius:8px; padding: 6px 8px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace; }
+code, pre{ background: rgba(230,238,246,0.03); color: var(--text); border-radius:8px; padding: 6px 8px; font-family: var(--mono); }
 pre{ padding: 12px; overflow:auto; }
 
 /* Images */
 .image-section img{ border-radius:8px; max-width:100%; height:auto; display:block; }
 
-/* Small responsive tweaks */
-@media (max-width: 900px){
-  .container{ margin: 18px 12px; padding: 22px; }
-  #growing-tree{ left: 4vw; width: 36vw; max-width: 360px; }
+/* Responsive tweaks */
+@media (max-width: 960px){
+  .container{ margin: 20px 12px; padding: 22px; }
 }
 
-/* Decorative tree sizing (adjustable) */
-#growing-tree svg{ width: 360px; height: auto; display:block; }
+/* Subtle focus improvement for accessibility */
+:focus{ outline: 3px solid rgba(79,224,193,0.14); outline-offset: 2px; }
 
-/* Tree animation helpers (fallback if JS also injects CSS) */
-.tree-path{ stroke: var(--tree-green); stroke-width: 6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.tree-branch{ stroke: var(--tree-green); stroke-width: 4; fill:none; stroke-linecap: round; }
-.tree-leaf{ fill: var(--tree-leaf); opacity: 0; transform-origin: center; }
+/* Mono names and bilingual marker */
+.name-bilingual .amh{ font-family: "Noto Sans Ethiopic", system-ui, sans-serif; color: var(--accent); font-weight: 700; }
 
-/* Reassure content always above decorative element */
+/* Small utilities */
 header, main, footer, .container{ position: relative; z-index: 2; }
-
-/* Gentle focus improvement */
-:focus{ outline: 2px solid rgba(43,143,58,0.16); outline-offset: 2px; }
-
-/* Small utility: keep images and blocks comfortable */
-.name-bilingual .amh{ font-family: "Noto Sans Ethiopic", system-ui, sans-serif; color: #19652a; font-weight: 700; }
