@@ -138,3 +138,7 @@ body li:hover, body .aside-box:hover{
   background-image: repeating-linear-gradient( to bottom, rgba(0,255,65,0.06), rgba(0,255,65,0.06) 1px, transparent 1px, transparent 12px );
   animation: scan 1.8s linear infinite;
 }
+
+/* Bilingual name styling */
+.name-bilingual{ white-space:nowrap; }
+.name-bilingual .amh{ font-family: "Noto Sans Ethiopic", Nyala, "Abyssinica SIL", system-ui, sans-serif; font-weight:700; color:#b8ffca; margin-left:4px; }
