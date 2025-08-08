@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVE: Technical Overview</title>
+    <style>
+        body {
+            background-color: #22272a;
+            color: #e2e4e6;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 40px 24px 24px 24px;
+            box-sizing: border-box;
+        }
+        h1, h2, h3 {
+            color: var(--matrix-green);
+            font-weight: 600;
+        }
+        h1 { margin-bottom: 10px; }
+        h2 { margin-top: 28px; margin-bottom: 10px; font-size: 1.15em; }
+        h3 { margin-top: 22px; margin-bottom: 8px; font-size: 1.06em; }
+        p, ul { line-height: 1.68; text-align: left; }
+        ul { margin: 0 0 12px 18px; }
+        code { color: var(--matrix-green); background: #1c2022; padding: 2px 4px; border-radius: 3px; font-size: 0.97em; }
+        pre { background: rgba(0,255,65,0.07); border: 1px solid rgba(0,255,65,0.2); border-radius: 8px; padding: 12px; overflow: auto; }
+        .note { background:#23282c; border-left:4px solid var(--matrix-green); padding:12px 16px; color:#a8b0b6; margin:16px 0; }
+        .footer { margin-top: 40px; font-size: 14px; color: #889097; text-align: center; font-style: italic; }
+    </style>
+    <link rel="stylesheet" href="theme.css">
+</head>
+<body class="matrix matrix-rain">
+    <div class="container">
+        <h1>EVE: Technical Overview</h1>
+        <p style="font-style: italic; color:#c9d6cf;">
+            EVE is a tireless autonomous AI developer for real codebases. It doesn’t just suggest changes—it implements them, tests them, learns from failures, and iterates until things work.
+        </p>
+
+        <h2>Architecture</h2>
+        <p>
+            Autonomous Agent Loop: LLM + File System + Shell Interface with structured action execution and context accumulation.
+        </p>
+
+        <h2>Core Components</h2>
+        <ul>
+            <li><strong>LLM Interface:</strong> OpenAI API with typed response schemas (ResponseBody class)</li>
+            <li><strong>File Handler:</strong> Read/write operations with absolute path management</li>
+            <li><strong>Shell Interface:</strong> Command execution with 240s timeout protection</li>
+            <li><strong>Context System:</strong> Linear action–result chain with planned graph upgrade</li>
+        </ul>
+
+        <h2>Execution Model</h2>
+        <pre><code>python
+while not finished:
+    context_str = serialize(self.context)
+    response = llm.generate(context_str, ResponseBody)
+    
+    if response.action == 0:  # File operation
+        result = file_system.read/write(response.file_name, response.content)
+    else:  # Shell command
+        result = shell.execute(response.shell_command, timeout=240)
+    
+    self.context.append({"action": response, "result": result})
+</code></pre>
+
+        <h2>Key Technical Features</h2>
+        <ul>
+            <li><strong>Typed Action Schema:</strong> Prevents malformed LLM responses</li>
+            <li><strong>Timeout Protection:</strong> Kills hanging processes automatically</li>
+            <li><strong>Context Persistence:</strong> Maintains state across multi-step operations</li>
+            <li><strong>Environment Isolation:</strong> Works within virtual environments</li>
+            <li><strong>Error Recovery:</strong> Continues execution after failures</li>
+        </ul>
+
+        <h2>Planned Enhancements</h2>
+        <ul>
+            <li><strong>Merkle Tree Memory:</strong> Hierarchical context with hash-based summaries</li>
+            <li><strong>Smart Pruning:</strong> Keep architectural decisions, summarize implementation details</li>
+            <li><strong>Defensive Programming:</strong> Error handling, security validation, resource limits</li>
+            <li><strong>Testing Integration:</strong> Automated test generation and execution</li>
+        </ul>
+
+        <h2>Current Capabilities</h2>
+        <ul>
+            <li>Multi-file codebase analysis and modification</li>
+            <li>Dependency resolution and environment management</li>
+            <li>Cross-language support (Python, shell scripts, configs)</li>
+            <li>Iterative problem-solving with failure recovery</li>
+        </ul>
+
+        <h2>Performance</h2>
+        <ul>
+            <li>Successfully operates on codebases with 10+ files</li>
+            <li>Handles complex dependency chains and import resolution</li>
+            <li>Self-corrects through re-execution when initial solutions fail</li>
+            <li>Maintains context across extended development sessions</li>
+        </ul>
+
+        <div class="note">
+            EVE will also employ a Merkle tree system for both retrieving code and dynamically pruning the codebase based on completed tasks—enabling scalable memory, fast diffs, and precise context management.
+        </div>
+
+        <div class="footer">&copy; 2025 Liyu Zerihun <span class="amh">(፡ልዩ ዘርሁን)</span></div>
+    </div>
+    <script src="matrix.js" defer></script>
+</body>
+</html>
