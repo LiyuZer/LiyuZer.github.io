@@ -1,144 +1,103 @@
-/* Matrix Super Theme - minimal, subtle, and accessible */
+/* Light Tree Theme - gentle light-blue background with a slowly growing green tree
+   This theme replaces the previous dark matrix theme. It keeps the site's structural
+   classes (.container, .footer, etc.) compatible but adjusts colors and layering.
+*/
 :root{
-  --matrix-bg:#050805;
-  --matrix-panel:rgba(0,255,65,0.05);
-  --matrix-border:rgba(0,255,65,0.25);
-  --matrix-green:#00ff41; /* classic */
-  --matrix-green-dim:#00d338;
-  --matrix-text:#cfead7;
-  --matrix-muted:#86cfa1;
-  --matrix-shadow:0 0 12px rgba(0,255,65,0.08);
+  --site-theme: tree; /* detected by matrix.js to inject the tree */
+  --bg: #f7fbff;           /* very light blue, closer to white */
+  --panel: rgba(255,255,255,0.85);
+  --panel-border: rgba(34,115,34,0.06);
+  --tree-green: #2b8f3a;   /* primary tree green */
+  --tree-leaf: #66b76a;
+  --text: #0f2130;         /* dark text for contrast */
+  --muted: #5d7b86;
+  --shadow: 0 6px 22px rgba(33,60,40,0.06);
+  --radius: 12px;
+  --max-width: 900px;
 }
 
-/* Base reset now applies globally (no class required) */
+/* Page base */
+html,body{ height:100%; }
 body{
   margin:0;
-  background: radial-gradient(1200px 600px at 15% -10%, rgba(0,255,65,0.08), transparent 55%),
-              radial-gradient(900px 500px at 90% 0%, rgba(0,255,65,0.05), transparent 60%),
-              var(--matrix-bg);
-  color:var(--matrix-text);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  line-height:1.65;
-  text-rendering:optimizeLegibility;
+  background: var(--bg);
+  color:var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  line-height:1.6;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  -webkit-text-size-adjust:100%;
+  text-rendering:optimizeLegibility;
+  overflow-x: hidden;
+  position: relative;
 }
 
-/* Enhance selection */
-body ::selection{background:rgba(0,255,65,0.25); color:#eaffef}
+/* Ensure the decorative tree sits under content */
+#site-tree, #growing-tree{ position: fixed; bottom: 0; left: 6vw; z-index: 0; pointer-events: none; }
 
-/* Layout container, keep widths but add subtle panel feel */
-body .container{
-  max-width: 800px;
-  box-sizing:border-box;
-  background: linear-gradient(180deg, rgba(0,255,65,0.03), rgba(0,255,65,0.01));
-  border:1px solid var(--matrix-border);
-  border-radius:12px;
-  box-shadow: var(--matrix-shadow);
+/* Keep existing container classes but with light panel */
+.container{
+  max-width: var(--max-width);
+  margin: 36px auto;
+  padding: 34px 24px;
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--panel-border);
+  position: relative; /* keeps it above decorative elements */
+  z-index: 2;
+  box-sizing: border-box;
 }
 
-/* Typography */
-body h1, body h2, body h3{
-  color:var(--matrix-green);
-  letter-spacing:0.02em;
-  text-shadow: 0 0 6px rgba(0,255,65,0.25);
+/* Headings */
+h1, h2, h3{
+  color: var(--tree-green);
+  margin: 0 0 12px 0;
+  font-weight: 700;
 }
+h1{ font-size: 1.9rem; }
+h2{ font-size: 1.25rem; }
 
-/* Gentle glow pulse for main title only */
-body h1{
-  animation: glowPulse 6s ease-in-out infinite;
-}
-@keyframes glowPulse{ 0%,100%{ text-shadow:0 0 6px rgba(0,255,65,0.18)} 50%{ text-shadow:0 0 12px rgba(0,255,65,0.35)} }
+p, li, span, a{ color: var(--text); }
 
 /* Links */
-body a{
-  color:var(--matrix-green);
-  border-bottom: 1px dotted rgba(0,255,65,0.6);
-  text-decoration:none;
-  transition: color .18s ease, border-color .18s ease, text-shadow .18s ease;
-}
-body a:hover{
-  color:#b8ffca;
-  border-bottom-color: rgba(0,255,65,0.9);
-  text-shadow:0 0 6px rgba(0,255,65,0.35);
-}
+a{ color: var(--tree-green); text-decoration: underline; text-underline-offset: 3px; }
+a:hover{ color: #1f6f2a; }
 
-/* Lists and items */
-body ul{ list-style: none; padding:0; margin:0 0 12px 0; }
-body li{
-  background: transparent; /* override prior site styles */
-  margin: 8px 0;
-  padding: 10px 14px;
-  border-left:3px solid rgba(0,255,65,0.35);
-  border-radius: 6px;
-  transition: background .18s ease, border-color .18s ease;
-}
-body li:hover{ background: var(--matrix-panel); border-left-color: var(--matrix-green); }
-
-/* Cards/aside */
-body .aside-box{
-  background: rgba(0,255,65,0.03);
-  color: var(--matrix-text);
-  border-left: 5px solid var(--matrix-green);
-  border-radius: 12px;
-  box-shadow: var(--matrix-shadow);
-}
-body .aside-box:hover{
-  box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 24px rgba(0,255,65,0.08);
-}
-
-/* Images */
-body .image-section img{
-  border: 2px solid var(--matrix-green);
-  border-radius: 8px;
-  box-shadow: 0 0 14px rgba(0,255,65,0.15);
-}
+/* Lists and blocks */
+ul{ padding-left: 18px; }
+li{ margin: 8px 0; }
+.block, .aside-box{ background: rgba(44,125,62,0.04); border-left:4px solid var(--tree-green); padding: 12px 16px; border-radius:10px; }
 
 /* Footer */
-body .footer{ color: var(--matrix-muted); opacity: 0.9; }
+.footer{ color: var(--muted); font-size: 0.95rem; margin-top: 26px; }
 
-/* Horizontal rules, code, etc. */
-body hr{ border:0; height:1px; background:linear-gradient(90deg, rgba(0,255,65,0), rgba(0,255,65,0.45), rgba(0,255,65,0)); }
-body code, body pre{
-  background: rgba(0,255,65,0.07);
-  color: #e7ffef;
-  border:1px solid rgba(0,255,65,0.2);
-  border-radius:8px;
-}
-body code{ padding: 0.15em 0.35em; }
-body pre{ padding: 12px; overflow:auto; }
+/* Code and pre */
+code, pre{ background: rgba(15,33,48,0.04); color: var(--text); border-radius:8px; padding: 6px 8px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace; }
+pre{ padding: 12px; overflow:auto; }
 
-/* Tables (if any) */
-body table{ border-collapse: collapse; width:100%; }
-body th, body td{ border:1px solid rgba(0,255,65,0.25); padding:8px 10px; }
-body th{ background: rgba(0,255,65,0.08); color:#dfffe9; }
+/* Images */
+.image-section img{ border-radius:8px; max-width:100%; height:auto; display:block; }
 
-/* Scrollbar (WebKit/Blink) */
-body ::-webkit-scrollbar{ width: 10px; height: 10px; }
-body ::-webkit-scrollbar-track{ background: rgba(0,255,65,0.04); }
-body ::-webkit-scrollbar-thumb{ background: rgba(0,255,65,0.45); border-radius:8px; }
-body ::-webkit-scrollbar-thumb:hover{ background: rgba(0,255,65,0.7); }
-
-/* Page variant: home gets gentle emphasis if class is present */
-body.matrix-home .container{ border-color: rgba(0,255,65,0.35); }
-body.matrix-home h2{ color:#83ff9e; }
-
-/* Optional Matrix rain overlay (enabled via .matrix-rain on body) */
-body.matrix-rain{ overflow-x:hidden; }
-.matrix-rain-canvas{
-  position: fixed; inset: 0; width:100%; height:100%; pointer-events:none; z-index:0;
-  opacity: 0.18; mix-blend-mode: screen; /* subtle */
-}
-/* Ensure content sits above canvas */
-body .container, body header, body main, body footer{ position: relative; z-index: 1; }
-
-/* Subtle scanline shimmer on hoverable cards/items */
-@keyframes scan{ from{ background-position:0 0 } to{ background-position:0 12px } }
-body li:hover, body .aside-box:hover{
-  background-image: repeating-linear-gradient( to bottom, rgba(0,255,65,0.06), rgba(0,255,65,0.06) 1px, transparent 1px, transparent 12px );
-  animation: scan 1.8s linear infinite;
+/* Small responsive tweaks */
+@media (max-width: 900px){
+  .container{ margin: 18px 12px; padding: 22px; }
+  #growing-tree{ left: 4vw; width: 36vw; max-width: 360px; }
 }
 
-/* Bilingual name styling */
-.name-bilingual{ white-space:nowrap; }
-.name-bilingual .amh{ font-family: "Noto Sans Ethiopic", Nyala, "Abyssinica SIL", system-ui, sans-serif; font-weight:700; color:#b8ffca; margin-left:4px; }
+/* Decorative tree sizing (adjustable) */
+#growing-tree svg{ width: 360px; height: auto; display:block; }
+
+/* Tree animation helpers (fallback if JS also injects CSS) */
+.tree-path{ stroke: var(--tree-green); stroke-width: 6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.tree-branch{ stroke: var(--tree-green); stroke-width: 4; fill:none; stroke-linecap: round; }
+.tree-leaf{ fill: var(--tree-leaf); opacity: 0; transform-origin: center; }
+
+/* Reassure content always above decorative element */
+header, main, footer, .container{ position: relative; z-index: 2; }
+
+/* Gentle focus improvement */
+:focus{ outline: 2px solid rgba(43,143,58,0.16); outline-offset: 2px; }
+
+/* Small utility: keep images and blocks comfortable */
+.name-bilingual .amh{ font-family: "Noto Sans Ethiopic", system-ui, sans-serif; color: #19652a; font-weight: 700; }
