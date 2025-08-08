@@ -22,7 +22,7 @@
             box-sizing: border-box;
         }
         h1, h2, h3 {
-            color: #85b8cb;
+            color: var(--matrix-green);
             font-weight: 600;
         }
         h1 {
@@ -54,14 +54,14 @@
         }
         .block {
             background: #23282c;
-            border-left: 4px solid #85b8cb;
+            border-left: 4px solid var(--matrix-green);
             padding: 12px 18px;
             margin: 18px 0;
             font-size: 1em;
             color: #a0a6ac;
         }
         code {
-            color: #85b8cb;
+            color: var(--matrix-green);
             background: #1c2022;
             padding: 2px 4px;
             border-radius: 3px;
@@ -87,28 +87,28 @@
         <div class="block">
             <strong>Example:</strong> "The big brown fox jumped over the fence."
             <br><br>
-            <strong>Phase 1: Tokenization.</strong> The input sentence is tokenized into pieces mapped to a dictionary. If "fox" is token 452, we have a vector with a 1 at index 452. This becomes a word embedding—a higher-dimensional vector encoding richer meaning.
+            <strong>Phase 1: Tokenization.</strong> The input sentence is tokenized into pieces mapped to a dictionary. If "fox" is token 452, we have a vector with a 1 at index 452. This becomes a word embeddinga higher-dimensional vector encoding richer meaning.
             <br><br>
-            <strong>Phase 2: Attention &amp; Forward Propagation.</strong> These embeddings are processed by attention blocks. Each token is updated by aggregating information from tokens it is most related to—allowing the model to "pay attention" to the important parts for each word.
+            <strong>Phase 2: Attention &amp; Forward Propagation.</strong> These embeddings are processed by attention blocks. Each token is updated by aggregating information from tokens it is most related toallowing the model to "pay attention" to the important parts for each word.
             <br><br>
             <strong>Phase 3: Sampling.</strong> Decoder-based transformers work in an autoregressive fashion: input the first word, predict the second, input both to predict the third, and so on. The model produces a probability distribution for the next token; we sample from this distribution.
         </div>
 
         <p>
-            Both pre-training and post-training share this core process. Here’s where they diverge:
+            Both pre-training and post-training share this core process. Heres where they diverge:
         </p>
         <ul>
             <li>
-                <strong>Pre-training:</strong> The model learns the distribution of human text via next-token prediction—akin to reading the textbook cover-to-cover.
+                <strong>Pre-training:</strong> The model learns the distribution of human text via next-token predictionakin to reading the textbook cover-to-cover.
             </li>
             <li>
-                <strong>Post-training:</strong> The pre-trained model isn't ready for use—it must be <em>aligned</em> with our values. To do this, a smaller model is trained on human-evaluated outputs, assigning rewards to text. This <strong>reward model</strong> then trains the larger model (via RLHF) to output text it finds rewarding.
+                <strong>Post-training:</strong> The pre-trained model isn't ready for useit must be <em>aligned</em> with our values. To do this, a smaller model is trained on human-evaluated outputs, assigning rewards to text. This <strong>reward model</strong> then trains the larger model (via RLHF) to output text it finds rewarding.
             </li>
         </ul>
 
         <h2>The Growing Cracks in Current Alignment</h2>
         <p>
-            Today’s models output tokens that often align with our goals, but as we look forward, two main problems emerge:
+            Todays models output tokens that often align with our goals, but as we look forward, two main problems emerge:
         </p>
         <ul>
             <li>
@@ -120,36 +120,36 @@
         </ul>
 
         <p>
-            These limitations suggest we need a fundamentally different approach. The current paradigm treats alignment as an optimization problem—finding the right reward signal to guide behavior. But what if the issue isn’t about rewards at all? What if the real problem is that we have no way to <em>verify</em> whether our models are reasoning correctly?
+            These limitations suggest we need a fundamentally different approach. The current paradigm treats alignment as an optimization problemfinding the right reward signal to guide behavior. But what if the issue isnt about rewards at all? What if the real problem is that we have no way to <em>verify</em> whether our models are reasoning correctly?
         </p>
 
         <h2>A Different Framework: From Rewards to Reasoning</h2>
         <p>
-            Today, when a model answers a question, we might evaluate the quality by human preference, but we have no insight into its reasoning. The model could hallucinate, make logical errors, or even intentionally mislead—and we might not realize until much later. As models become more capable, this opacity is dangerous; we're essentially flying blind.
+            Today, when a model answers a question, we might evaluate the quality by human preference, but we have no insight into its reasoning. The model could hallucinate, make logical errors, or even intentionally misleadand we might not realize until much later. As models become more capable, this opacity is dangerous; we're essentially flying blind.
         </p>
         <p>
-            Instead of asking “How do we reward good behavior?”, perhaps we should ask, “How do we <em>verify</em> correct reasoning?” In mathematics, we accept proofs because they follow valid logical steps from axioms—not because they feel right. In courts, we require evidence and logic that withstands scrutiny. In science, we demand reproducible evidence and methodology. Why shouldn’t AI be held to the same standard?
+            Instead of asking How do we reward good behavior?, perhaps we should ask, How do we <em>verify</em> correct reasoning? In mathematics, we accept proofs because they follow valid logical steps from axiomsnot because they feel right. In courts, we require evidence and logic that withstands scrutiny. In science, we demand reproducible evidence and methodology. Why shouldnt AI be held to the same standard?
         </p>
 
         <h2>Alignment by Proof: A New Approach</h2>
         <p>
-            What if we reframed the alignment problem—not as a lack of alignment, but as a lack of <strong>proof</strong>? Currently, we have no guarantee that a model’s output is tethered to reality. It may hallucinate, fabricate, or mislead; we can’t verify its reasoning.
+            What if we reframed the alignment problemnot as a lack of alignment, but as a lack of <strong>proof</strong>? Currently, we have no guarantee that a models output is tethered to reality. It may hallucinate, fabricate, or mislead; we cant verify its reasoning.
         </p>
         <p>
-            Imagine a world where AI doesn't just output answers, but outputs <strong>proofs</strong> for its statements—a chain of reasoning, similar to what mathematicians use with Lean or other proof assistants. The AI would be required to establish its claims using a transparent, verifiable proof engine.
+            Imagine a world where AI doesn't just output answers, but outputs <strong>proofs</strong> for its statementsa chain of reasoning, similar to what mathematicians use with Lean or other proof assistants. The AI would be required to establish its claims using a transparent, verifiable proof engine.
         </p>
         <p>
-            This engine could combine probabilistic reasoning (Bayesian networks, causal models) with formal proof systems, forming a “reality prover”—an engine that can validate deductions in a transparent, checkable way.
+            This engine could combine probabilistic reasoning (Bayesian networks, causal models) with formal proof systems, forming a reality proveran engine that can validate deductions in a transparent, checkable way.
         </p>
         <div class="block">
             <strong>Concrete example:</strong>  
-            Suppose you ask: “Did the assassination of Archduke Ferdinand directly lead to World War I?”  
+            Suppose you ask: Did the assassination of Archduke Ferdinand directly lead to World War I?  
             <br><br>
             With proof-based alignment, the AI wouldn't just write an essay. It would generate a formal proof showing: <br>
-            • What historical evidence it draws from<br>
-            • The causal reasoning connecting the assassination to the war<br>
-            • The logical steps supporting or weakening alternate explanations<br>
-            • Confidence and uncertainty at each step<br>
+            2 What historical evidence it draws from<br>
+            2 The causal reasoning connecting the assassination to the war<br>
+            2 The logical steps supporting or weakening alternate explanations<br>
+            2 Confidence and uncertainty at each step<br>
             This proof could then be run through a checker to verify that each step follows logically and is properly supported by evidence.
         </div>
         <p>
@@ -159,13 +159,13 @@
         <h2>The Promise of Provable Alignment</h2>
         <ul>
             <li>
-                <strong>Scalability.</strong> As the proof engine validates more statements, it becomes harder to fool. A discrete, formal engine can be kept relatively small and auditable—like Lean—while verifying the reasoning of much larger models.
+                <strong>Scalability.</strong> As the proof engine validates more statements, it becomes harder to fool. A discrete, formal engine can be kept relatively small and auditablelike Leanwhile verifying the reasoning of much larger models.
             </li>
             <li>
-                <strong>Interpretability.</strong> The proofs are code! Even if humans didn’t write the original reasoning engine, we can inspect, study, and validate both the proofs and the inference rules.
+                <strong>Interpretability.</strong> The proofs are code! Even if humans didnt write the original reasoning engine, we can inspect, study, and validate both the proofs and the inference rules.
             </li>
             <li>
-                <strong>Meta-reasoning.</strong> We could prove things about the proof engine itself and about the AI’s reasoning process. Even complex principles like fairness or compassion, while not binary, might be representable in a probabilistic or axiomatic form for formal verification.
+                <strong>Meta-reasoning.</strong> We could prove things about the proof engine itself and about the AIs reasoning process. Even complex principles like fairness or compassion, while not binary, might be representable in a probabilistic or axiomatic form for formal verification.
             </li>
         </ul>
 
