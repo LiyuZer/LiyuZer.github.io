@@ -44,6 +44,12 @@
             EVE is a tireless autonomous AI developer for real codebases. It iterates, improves, until things work.
         </p>
 
+        <h2>Example Interaction</h2>
+        <div class="chat" aria-label="Example conversation between Liyu and Eve">
+            <div class="msg liyu"><span class="speaker">Liyu:</span>Hello, Liyu what are we doing today!</div>
+            <div class="msg eve"><span class="speaker">Eve:</span>How does a computer get drunk? It takes screenshots! 😄</div>
+        </div>
+
         <h2>Architecture</h2>
         <p>
             Autonomous Agent Loop: LLM + File System + Shell Interface with structured action execution and context accumulation.
@@ -54,7 +60,7 @@
             <li><strong>LLM Interface:</strong> OpenAI API with typed response schemas (ResponseBody class)</li>
             <li><strong>File Handler:</strong> Read/write operations with absolute path management</li>
             <li><strong>Shell Interface:</strong> Command execution with 240s timeout protection</li>
-            <li><strong>Context System:</strong> Linear action–result chain with planned graph upgrade</li>
+            <li><strong>Context System:</strong> Linear actionresult chain with planned graph upgrade</li>
         </ul>
 
         <h2>Execution Model</h2>
@@ -106,10 +112,10 @@ while not finished:
         </ul>
 
         <div class="note">
-            EVE will also employ a Merkle tree system for both retrieving code and dynamically pruning the codebase based on completed tasks—enabling scalable memory, fast diffs, and precise context management.
+            EVE will also employ a Merkle tree system for both retrieving code and dynamically pruning the codebase based on completed tasksenabling scalable memory, fast diffs, and precise context management.
         </div>
 
-        <div class="footer">&copy; 2025 Liyu Zerihun <span class="amh">(፡ልዩ ዘርሁን)</span></div>
+        <div class="footer">&copy; 2025 Liyu Zerihun <span class="amh">(610de9 d82d0195)</span></div>
     </div>
     <script src="matrix.js" defer></script>
 </body>

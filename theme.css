@@ -16,6 +16,9 @@
   --radius: 12px;
   --max-width: 960px;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+  /* Speaker-specific colors for chat on eve.html */
+  --liyu-color: #4fe0c1;  /* teal */
+  --eve-color: #00ff41;   /* neon green */
 }
 
 html,body{ height:100%; }
@@ -120,3 +123,43 @@ h1, h2, h3 { text-shadow: 0 1px 0 rgba(0,0,0,0.35); }
 
 /* If a page accidentally set a very dark panel color, keep the site readable by guaranteeing text contrast */
 .container * { color: var(--text) !important; }
+
+/* Chat / example conversation styles used on eve.html */
+.chat{
+  margin: 18px 0 24px 0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  font-family: var(--mono);
+  font-size: 0.98rem;
+}
+.chat .msg{
+  padding: 10px 14px;
+  border-radius: 12px;
+  max-width: 86%;
+  line-height: 1.45;
+  word-break: break-word;
+  box-shadow: 0 4px 18px rgba(7,10,12,0.28);
+}
+.chat .liyu{
+  align-self: flex-start;
+  background: rgba(79,224,193,0.06);
+  border: 1px solid rgba(79,224,193,0.12);
+  color: var(--liyu-color);
+}
+.chat .eve{
+  align-self: flex-end;
+  background: rgba(0,255,65,0.04);
+  border: 1px solid rgba(0,255,65,0.12);
+  color: var(--eve-color);
+}
+.chat .speaker{
+  display:block;
+  font-weight:700;
+  margin-bottom:6px;
+  font-size:0.95em;
+}
+
+@media (max-width: 640px){
+  .chat .msg{ max-width: 100%; }
+}
