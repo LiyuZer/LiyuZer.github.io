@@ -1,12 +1,9 @@
-/* Fractal Dark Theme - modern readable palette with subtle animated fractal background.
-   This CSS preserves existing structural classes (.container, .footer, etc.) so HTML pages
-   continue to work without modification. The decorative fractal background is injected
-   by matrix.js when --site-theme is "fractal". Colors chosen for high contrast and legibility.
-*/
+/* Fractal Dark Theme - modern readable palette.
+   Cleaned to avoid overriding page-specific styles. */
 :root{
-  --site-theme: fractal; /* detected by matrix.js */
-  --bg: #061018;           /* deeper, darker base to make fractal and panels read well */
-  --panel: rgba(8,12,14,0.56); /* slightly more translucent panels so fractal shows through */
+  --site-theme: fractal; /* legacy flag; harmless */
+  --bg: #061018;
+  --panel: rgba(8,12,14,0.56);
   --panel-border: rgba(255,255,255,0.04);
   --accent: #4fe0c1;      /* primary accent (teal) */
   --accent-2: #7bdcff;    /* secondary accent (soft cyan) */
@@ -16,9 +13,10 @@
   --radius: 12px;
   --max-width: 800px;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
-  /* Speaker-specific colors for chat on eve.html */
-  --liyu-color: #4fe0c1;  /* teal */
-  --eve-color: #00ff41;   /* neon green */
+  --liyu-color: #4fe0c1;
+  --eve-color: #00ff41;
+  /* Provide legacy var used by older pages (e.g., al.html) */
+  --matrix-green: #4fe0c1;
 }
 
 html,body{ height:100%; }
@@ -41,19 +39,11 @@ body{
   min-height: 100vh;
 }
 
-/* Decorative fractal container (injected by matrix.js) */
-#fractal-bg{
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.32;
-  mix-blend-mode: soft-light;
-  filter: contrast(1.04) saturate(1.02) blur(1px);
-}
+/* Decorative background (no longer injected, safe to keep) */
+#fractal-bg{ position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.32; mix-blend-mode: soft-light; filter: contrast(1.04) saturate(1.02) blur(1px); }
 #fractal-bg svg{ width: 100vw; height: 100vh; display:block; }
 
-/* Keep content above decorative background */
+/* Content panel */
 .container{
   max-width: var(--max-width);
   margin: 40px auto;
@@ -62,51 +52,37 @@ body{
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   border: 1px solid var(--panel-border);
-  position: relative; /* above decorative elements */
+  position: relative;
   z-index: 2;
   box-sizing: border-box;
-  /* slight backdrop blur to separate text while keeping fractal visible */
   -webkit-backdrop-filter: blur(4px) saturate(1.02);
   backdrop-filter: blur(4px) saturate(1.02);
 }
 
-/* Headings */
+/* Headings: do NOT set global colors to respect page-specific styles */
 h1, h2, h3{
-  color: var(--accent);
   margin: 0 0 12px 0;
   font-weight: 700;
 }
 h1{ font-size: 1.95rem; }
 h2{ font-size: 1.25rem; }
 
+/* Base text */
 p, li, span, a{ color: var(--text); }
 
 /* Links */
 a{ color: var(--accent-2); text-decoration: none; border-bottom: 1px dotted rgba(123,220,255,0.18); }
 a:hover{ color: var(--accent); border-bottom-style: solid; }
 
-/* Lists and blocks */
+/* Lists */
 ul{ padding-left: 18px; }
 li{ margin: 8px 0; }
-.block, .aside-box{
-  /* informational boxes translucent so fractal shows through */
+
+/* Only style aside boxes here; do not override generic .block to respect page-specific layouts */
+.aside-box{
   background: rgba(79,224,193,0.035);
   border-left:4px solid var(--accent);
-.image-section img{
-  border-radius:8px;
-  max-width:180px;
-  height:auto;
-  display:block;
-  border: 1px solid rgba(133,184,203,0.35);
-  box-shadow: 0 3px 14px rgba(0,0,0,0.22);
-}
-  border-radius:8px;
-  max-width:150px;
-  height:auto;
-  display:block;
-  border: 1px solid rgba(133,184,203,0.35);
-  box-shadow: 0 3px 14px rgba(0,0,0,0.22);
-}
+  padding: 12px 16px;
   border-radius:10px;
 }
 
@@ -120,7 +96,7 @@ pre{ padding: 12px; overflow:auto; border: 1px solid rgba(255,255,255,0.03); }
 /* Images */
 .image-section img{
   border-radius:8px;
-  max-width:120px;
+  max-width:220px;
   height:auto;
   display:block;
   border: 1px solid rgba(133,184,203,0.35);
@@ -146,103 +122,35 @@ pre{ padding: 12px; overflow:auto; border: 1px solid rgba(255,255,255,0.03); }
   justify-content: space-between;
   gap: 12px;
 }
-.brand{
-  color: var(--accent);
-  font-weight: 800;
-  letter-spacing: 0.2px;
-}
-.nav{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.nav a{
-  color: var(--text);
-  border: 1px solid rgba(255,255,255,0.04);
-  padding: 6px 10px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.02);
-}
-.nav a:hover{
-  color: var(--accent);
-  border-color: rgba(79,224,193,0.25);
-  background: rgba(79,224,193,0.06);
-}
-@media (max-width: 640px){
-  .site-header .inner{ padding: 8px 12px; }
-  .nav{ gap: 8px; }
-}
+.brand{ color: var(--accent); font-weight: 800; letter-spacing: 0.2px; }
+.nav{ display: flex; gap: 10px; flex-wrap: wrap; }
+.nav a{ color: var(--text); border: 1px solid rgba(255,255,255,0.04); padding: 6px 10px; border-radius: 8px; background: rgba(255,255,255,0.02); }
+.nav a:hover{ color: var(--accent); border-color: rgba(79,224,193,0.25); background: rgba(79,224,193,0.06); }
 
-/* Responsive tweaks */
-@media (max-width: 960px){
-  .container{ margin: 20px 12px; padding: 22px; }
-}
+@media (max-width: 640px){ .site-header .inner{ padding: 8px 12px; } .nav{ gap: 8px; } }
+@media (max-width: 960px){ .container{ margin: 20px 12px; padding: 22px; } }
 
-/* Subtle focus improvement for accessibility */
+/* Focus for a11y */
 :focus{ outline: 3px solid rgba(79,224,193,0.14); outline-offset: 2px; }
 
-/* Mono names and bilingual marker */
+/* Bilingual marker */
 .name-bilingual .amh{ font-family: "Noto Sans Ethiopic", system-ui, sans-serif; color: var(--accent); font-weight: 700; }
 
-/* Small utilities */
+/* Keep these positioned above any decorative layers */
 header, main, footer, .container{ position: relative; z-index: 2; }
 
-/* Adjustments for elements that used solid boxes in page-specific CSS
-   Many pages declare solid backgrounds for list items / aside boxes; override them here
-   with slightly translucent variants so the fractal remains visible beneath. */
-li, .aside-box, .goal-box, .note, .container .block {
-  background: rgba(14,18,20,0.36) !important;
-  border: 1px solid rgba(255,255,255,0.03);
-  border-radius: 10px;
-}
-li:hover, .aside-box:hover, .goal-box:hover, .note:hover{
-  background: rgba(14,18,20,0.28) !important;
-}
+/* Preserve page intent (no forced !important color or .block overrides) */
+/* Hover polish for list-like boxes without overriding page blocks */
+li, .aside-box, .goal-box, .note { background: rgba(14,18,20,0.36); border: 1px solid rgba(255,255,255,0.03); border-radius: 10px; }
+li:hover, .aside-box:hover, .goal-box:hover, .note:hover{ background: rgba(14,18,20,0.28); }
 
-/* Tweak legacy page-specific colors to ensure contrast */
+/* Subtle heading shadow */
 h1, h2, h3 { text-shadow: 0 1px 0 rgba(0,0,0,0.35); }
 
-/* Ensure small callouts keep good contrast */
-.aside-box strong, .block strong { color: var(--accent-2); }
-
-/* Keep links accented while ensuring general text contrast */
-.container :not(a) { color: var(--text) !important; }
-
-/* Chat / example conversation styles used on eve.html */
-.chat{
-  margin: 18px 0 24px 0;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  font-family: var(--mono);
-  font-size: 0.98rem;
-}
-.chat .msg{
-  padding: 10px 14px;
-  border-radius: 12px;
-  max-width: 86%;
-  line-height: 1.45;
-  word-break: break-word;
-  box-shadow: 0 4px 18px rgba(7,10,12,0.28);
-}
-.chat .liyu{
-  align-self: flex-start;
-  background: rgba(79,224,193,0.06);
-  border: 1px solid rgba(79,224,193,0.12);
-  color: var(--liyu-color);
-}
-.chat .eve{
-  align-self: flex-end;
-  background: rgba(0,255,65,0.04);
-  border: 1px solid rgba(0,255,65,0.12);
-  color: var(--eve-color);
-}
-.chat .speaker{
-  display:block;
-  font-weight:700;
-  margin-bottom:6px;
-  font-size:0.95em;
-}
-@media (max-width: 640px){
-  .chat .msg{ max-width: 100%; }
-}
+/* Chat styles (eve.html) */
+.chat{ margin: 18px 0 24px 0; display:flex; flex-direction:column; gap:10px; font-family: var(--mono); font-size: 0.98rem; }
+.chat .msg{ padding: 10px 14px; border-radius: 12px; max-width: 86%; line-height: 1.45; word-break: break-word; box-shadow: 0 4px 18px rgba(7,10,12,0.28); }
+.chat .liyu{ align-self: flex-start; background: rgba(79,224,193,0.06); border: 1px solid rgba(79,224,193,0.12); color: var(--liyu-color); }
+.chat .eve{ align-self: flex-end; background: rgba(0,255,65,0.04); border: 1px solid rgba(0,255,65,0.12); color: var(--eve-color); }
+.chat .speaker{ display:block; font-weight:700; margin-bottom:6px; font-size:0.95em; }
+@media (max-width: 640px){ .chat .msg{ max-width: 100%; } }
