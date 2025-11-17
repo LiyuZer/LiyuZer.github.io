@@ -14,11 +14,11 @@
     <meta property="og:image" content="https://www.liyuz.com/og/default.svg">
     
     
-    <meta property=\"og:image:width\" content=\"1200\">
-    <meta property=\"og:image:height\" content=\"630\">
-<meta property=\"og:image:width\" content=\"1200\">
-    <meta property=\"og:image:height\" content=\"630\">
-<meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Liyu Zerihun — Portfolio">
     <meta name="twitter:description" content="UCLA CS undergraduate focusing on Machine Learning, Automata Theory, and Systems Design. Projects, writing, and research by Liyu Zerihun.">
     <meta name="twitter:image" content="https://www.liyuz.com/og/default.svg">
@@ -86,40 +86,20 @@
         .image-section img {
             border: 2px solid #85b8cb;
             border-radius: 7px;
-            max-width: 220px; /* increased from 180px to reflect theme.css */
+            max-width: 220px;
             height: auto;
-        }
-        .aside-box {
-            background: #20262b;
-            color: #d4eefc;
-            border-left: 5px solid #85b8cb;
-            border-radius: 14px;
-            padding: 22px 22px 18px 22px;
-            max-width: 310px;
-            font-size: 1.05em;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.13);
-            transition: box-shadow 0.2s;
-            flex: 1 1 220px;
-            margin-top: 0;
-        }
-        .aside-box:hover {
-            box-shadow: 0 4px 20px rgba(38, 163, 255, 0.06);
-        }
-        @media (max-width: 900px) {
-            .profile-row {
-                flex-direction: column;
-                gap: 0;
-            }
-            .aside-box {
-                max-width: 100%;
-                margin-top: 22px;
-            }
         }
         .footer {
             margin-top: 40px;
             font-size: 13px;
             color: #889097;
             text-align: center;
+        }
+        @media (max-width: 900px) {
+            .profile-row {
+                flex-direction: column;
+                gap: 0;
+            }
         }
     </style>
     <link rel="stylesheet" href="theme.css">
@@ -183,23 +163,11 @@
             <div class="about-section">
                 <h2 id="about">About</h2>
                 <p style="line-height:1.6">
-                    If I had to sum up my purpose in a single line, it would be this:
-                    I try to make sense of existence through mathematics.
-                    Math is not just a tool for me, it is a creative medium for thought expression.
+                    I'm an undergraduate CS student at UCLA interested in machine learning, automata, and systems. 
+                    I like using mathematics as a language for understanding and building intelligent systems.
                 </p>
                 <div class="image-section">
                     <img src="personal_img.jpg" alt="Liyu Zerihun">
-                </div>
-            </div>
-            <div class="aside-box">
-                <strong>The Snowball Criterion</strong>
-                <p style="margin:0; font-style:italic; line-height:1.7;">
-                    True intelligence reveals itself when a system can design and create a successor more intelligent than itself.
-                    This ability for recursive improvement, where a system surpasses its own boundaries, is the ultimate test for advanced intelligence in my view.
-                    Although we have seen remarkable progress in narrow fields, no general artificial intelligence has fully reached this standard yet.
-                </p>
-                <div style="font-size:0.93em; margin-top:10px; color:#88b7c5;">
-                    This idea shapes my research and guides the questions I ask about computation, intelligence, and the future.
                 </div>
             </div>
         </div>
