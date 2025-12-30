@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measuring What Neural Networks Really Learn — Liyu Zerihun</title>
+    <meta name="description" content="Introducing a framework for estimating the intrinsic dimensionality of deep neural networks through geometric distillation. Research by Liyu Zerihun.">
+    <meta name="theme-color" content="#061018">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Liyu Zerihun">
+    <meta property="og:title" content="Measuring What Neural Networks Really Learn — Liyu Zerihun">
+    <meta property="og:description" content="Introducing a framework for estimating the intrinsic dimensionality of deep neural networks through geometric distillation.">
+    <meta property="og:url" content="https://LiyuZer.github.io/effective_rank.html">
+    <meta property="og:image" content="https://LiyuZer.github.io/personal_img.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Measuring What Neural Networks Really Learn — Liyu Zerihun">
+    <meta name="twitter:description" content="Introducing a framework for estimating the intrinsic dimensionality of deep neural networks through geometric distillation.">
+    <meta name="twitter:image" content="https://LiyuZer.github.io/personal_img.jpg">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        body {
+            background-color: #22272a;
+            color: #e2e4e6;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 750px;
+            width: 100%;
+            padding: 40px 24px 24px 24px;
+            box-sizing: border-box;
+        }
+        h1, h2 {
+            color: #85b8cb;
+            font-weight: 600;
+        }
+        h1 {
+            margin-bottom: 18px;
+        }
+        h2 {
+            margin-top: 30px;
+            margin-bottom: 12px;
+            font-size: 1.15em;
+        }
+        p {
+            line-height: 1.65;
+            text-align: left;
+        }
+        .highlight-box {
+            background: #272c30;
+            border-left: 4px solid #85b8cb;
+            padding: 14px 18px;
+            margin: 18px 0;
+            border-radius: 6px;
+        }
+        .links {
+            display: flex;
+            gap: 14px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .links a {
+            padding: 10px 16px;
+            background: #272c30;
+            border: 1px solid #85b8cb;
+            border-radius: 8px;
+            color: #6eb1d6;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .links a:hover {
+            background: #32383d;
+            border-color: #b3e5fc;
+            color: #b3e5fc;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #889097;
+            text-align: center;
+            font-style: italic;
+        }
+        code {
+            background: #1a1f23;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #85b8cb;
+            font-family: monospace;
+        }
+    </style>
+    <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="inner">
+    <div class="brand"><a href="index.html" style="border:0">Liyu Zerihun</a></div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="al.html">Ideas</a>
+      <a href="goals.html">Goals</a>
+      <a href="index.html#about">About</a>
+    </nav>
+  </div>
+</header>
+    <div class="container">
+        <h1>Measuring What Neural Networks Really Learn</h1>
+        <p style="font-style: italic; color: #96a4ae;">Research paper: Estimating the Effective Rank of Vision Transformers via Low-Rank Factorization</p>
+
+        <h2>The Paradox of Over-Parameterization</h2>
+        <p>
+            Modern neural networks are vastly over-parameterized. A Vision Transformer might have millions of parameters, yet it somehow learns useful representations without collapsing into memorization. This raises a fundamental question: <strong>how many dimensions does a neural network actually use?</strong>
+        </p>
+
+        <p>
+            The answer lies hidden in the geometry of learned representations. While a network may have millions of parameters on paper, its learned representations often live in a much lower-dimensional subspace. Understanding this intrinsic dimensionality is crucial for compression, interpretability, and theoretical understanding of deep learning.
+        </p>
+
+        <h2>A New Framework: Geometric Distillation</h2>
+        <p>
+            In my recent paper, I introduce a framework for systematically estimating this intrinsic dimensionality through what I call <em>geometric distillation</em>. The approach is elegant in its simplicity:
+        </p>
+
+        <div class="highlight-box">
+            <strong>The Method:</strong>
+            <ol style="margin: 8px 0; padding-left: 20px;">
+                <li>Train a full-rank "teacher" network to convergence</li>
+                <li>Factorize its weight matrices at multiple ranks (r = 1, 2, 4, 8, ...)</li>
+                <li>Train each low-rank "student" via knowledge distillation</li>
+                <li>Measure performance as a function of rank</li>
+            </ol>
+        </div>
+
+        <p>
+            The key insight is treating learned representations as projections onto a low-rank subspace. By systematically varying the rank and measuring how well students can reconstruct the teacher's behavior, we can map out the model's intrinsic geometry.
+        </p>
+
+        <h2>Effective Rank as a Region</h2>
+        <p>
+            Traditional approaches try to pin down a single number for "effective rank." But this is the wrong question. A model's intrinsic dimensionality isn't a point—it's a <strong>region</strong>.
+        </p>
+
+        <p>
+            I define the effective rank as the smallest contiguous set of ranks where the student achieves 85-95% of the teacher's accuracy. This region captures the transition from under-capacity to sufficient representation. To stabilize these estimates, I fit the accuracy curve with a monotone PCHIP interpolant and identify where it crosses the normalized threshold.
+        </p>
+
+        <p>
+            I also introduce the concept of an <strong>effective knee</strong>: the rank that maximizes perpendicular distance between the smoothed accuracy curve and its endpoint secant. This provides an intrinsic indicator of where marginal gains concentrate—the "sweet spot" of compression.
+        </p>
+
+        <h2>Results: 11× Compression with Minimal Loss</h2>
+        <p>
+            On Vision Transformers, the method achieves remarkable results. Through systematic low-rank factorization and distillation, I compressed models by <strong>11× in parameters while retaining 94.7% of the teacher's accuracy</strong>. The effective rank regions revealed that these massive models truly operate in surprisingly low-dimensional spaces.
+        </p>
+
+        <p>
+            More importantly, the framework is <em>automated and algorithmic</em>. Unlike previous methods that require manual inspection or heuristics, this approach provides a systematic way to measure intrinsic dimensionality across different architectures, datasets, and training regimes.
+        </p>
+
+        <h2>Why This Matters</h2>
+        <p>
+            Understanding the intrinsic dimensionality of neural networks has implications far beyond compression. It touches on fundamental questions:
+        </p>
+
+        <ul style="line-height: 1.7;">
+            <li><strong>Generalization:</strong> Why do over-parameterized networks generalize? Perhaps because they converge to low-rank solutions.</li>
+            <li><strong>Transfer Learning:</strong> What structure is truly shared across tasks? The low-rank subspace may be where transfer happens.</li>
+            <li><strong>Interpretability:</strong> By identifying the dimensions that matter, we can focus our interpretability efforts where they count.</li>
+            <li><strong>Theory:</strong> A rigorous framework for measuring effective capacity bridges the gap between empirical practice and theoretical understanding.</li>
+        </ul>
+
+        <h2>Looking Forward</h2>
+        <p>
+            This work is a step toward understanding the true complexity of what neural networks learn. By treating rank as a measurable property rather than a static hyperparameter, we open new directions for exploring how dimensionality relates to architecture, data, and learning dynamics.
+        </p>
+
+        <p>
+            The framework is general enough to apply to any architecture and any task. My hope is that it provides a foundation for future work on the geometry of learned representations and the nature of compression in deep learning.
+        </p>
+
+        <div class="links">
+            <a href="https://arxiv.org/abs/2512.00792" target="_blank">📄 Read the Paper</a>
+            <a href="https://github.com/LiyuZer/Geometric_Distillation" target="_blank">💻 View Code & Experiments</a>
+        </div>
+
+        <div class="post-nav" style="display:flex; justify-content:space-between; gap:12px; margin-top:22px;">
+            <a href="writing.html">← All Writing</a>
+        </div>
+
+        <div class="footer">&copy; 2025 Liyu Zerihun <span class="amh">(ልዕ ደሪሁን)</span></div>
+    </div>
+</body>
+</html>
