@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Measuring What Neural Networks Really Learn — Liyu Zerihun</title>
-    <meta name="description" content="Introducing a framework for estimating the intrinsic dimensionality of deep neural networks through geometric distillation. Research by Liyu Zerihun.">
+    <meta name="description" content="A framework for estimating neural network intrinsic dimensionality through low-rank factorization and distillation. Research by Liyu Zerihun.">
     <meta name="theme-color" content="#061018">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Liyu Zerihun">
     <meta property="og:title" content="Measuring What Neural Networks Really Learn — Liyu Zerihun">
-    <meta property="og:description" content="Introducing a framework for estimating the intrinsic dimensionality of deep neural networks through geometric distillation.">
+    <meta property="og:description" content="A framework for estimating neural network intrinsic dimensionality through low-rank factorization and distillation.">
     <meta property="og:url" content="https://LiyuZer.github.io/effective_rank.html">
     <meta property="og:image" content="https://LiyuZer.github.io/personal_img.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Measuring What Neural Networks Really Learn — Liyu Zerihun">
-    <meta name="twitter:description" content="Introducing a framework for estimating the intrinsic dimensionality of deep neural networks through geometric distillation.">
+    <meta name="twitter:description" content="A framework for estimating neural network intrinsic dimensionality through low-rank factorization and distillation.">
     <meta name="twitter:image" content="https://LiyuZer.github.io/personal_img.jpg">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <style>
@@ -112,22 +112,31 @@
         <h1>Measuring What Neural Networks Really Learn</h1>
         <p style="font-style: italic; color: #96a4ae;">Research paper: Estimating the Effective Rank of Vision Transformers via Low-Rank Factorization</p>
 
-        <h2>The Paradox of Over-Parameterization</h2>
+        <h2>Motivation</h2>
         <p>
-            Modern neural networks are vastly over-parameterized. A Vision Transformer might have millions of parameters, yet it somehow learns useful representations without collapsing into memorization. This raises a fundamental question: <strong>how many dimensions does a neural network actually use?</strong>
+            Neural networks are typically over-parameterized relative to the complexity of the functions they learn. A Vision Transformer might have millions of parameters, but it's not clear how many of those parameters are actually necessary for the learned behavior. Put differently: <strong>what is the intrinsic dimensionality of a trained network?</strong>
         </p>
 
         <p>
-            The answer lies hidden in the geometry of learned representations. While a network may have millions of parameters on paper, its learned representations often live in a much lower-dimensional subspace. Understanding this intrinsic dimensionality is crucial for compression, interpretability, and theoretical understanding of deep learning.
+            This question matters for practical reasons (compression, efficiency) and theoretical ones (understanding generalization and capacity). While we have well-developed notions of effective rank for matrices, extending this to neural networks—which consist of many matrices arranged in complex ways—is less obvious.
         </p>
 
-        <h2>A New Framework: Geometric Distillation</h2>
+        <h2>Background: Effective Rank of Matrices</h2>
         <p>
-            In my recent paper, I introduce a framework for systematically estimating this intrinsic dimensionality through what I call <em>geometric distillation</em>. The approach is elegant in its simplicity:
+            The concept of effective rank is well-established in linear algebra and matrix theory. For a given matrix, the effective rank estimates how many singular values meaningfully contribute to its structure, as opposed to just counting non-zero singular values. Various definitions exist, often based on entropy measures or thresholding the singular value spectrum.
+        </p>
+
+        <p>
+            However, applying this concept to neural networks is not straightforward. A trained network doesn't have a single weight matrix—it has many, arranged in complex architectures. More importantly, what matters isn't just the rank of individual weight matrices, but the <em>representational capacity</em> of the learned functions they compute. This raises a question: can we estimate how many dimensions a neural network actually uses in a way that reflects its learned behavior, not just its weight matrices?
+        </p>
+
+        <h2>An Empirical Approach</h2>
+        <p>
+            The method I explore in this paper is fairly straightforward:
         </p>
 
         <div class="highlight-box">
-            <strong>The Method:</strong>
+            <strong>The Process:</strong>
             <ol style="margin: 8px 0; padding-left: 20px;">
                 <li>Train a full-rank "teacher" network to convergence</li>
                 <li>Factorize its weight matrices at multiple ranks (r = 1, 2, 4, 8, ...)</li>
@@ -137,50 +146,46 @@
         </div>
 
         <p>
-            The key insight is treating learned representations as projections onto a low-rank subspace. By systematically varying the rank and measuring how well students can reconstruct the teacher's behavior, we can map out the model's intrinsic geometry.
+            By systematically varying the rank and observing how performance changes, we can probe where the meaningful capacity lives. The approach treats effective rank as an empirical property measured through distillation, rather than something computed directly from weight matrices.
         </p>
 
         <h2>Effective Rank as a Region</h2>
         <p>
-            Traditional approaches try to pin down a single number for "effective rank." But this is the wrong question. A model's intrinsic dimensionality isn't a point—it's a <strong>region</strong>.
+            One choice I made was to treat effective rank as a range rather than a single number. The idea is to identify the smallest contiguous set of ranks where a student can achieve 85-95% of the teacher's accuracy. This seems more realistic than pinpointing a single threshold, since the transition from insufficient to sufficient capacity is gradual.
         </p>
 
         <p>
-            I define the effective rank as the smallest contiguous set of ranks where the student achieves 85-95% of the teacher's accuracy. This region captures the transition from under-capacity to sufficient representation. To stabilize these estimates, I fit the accuracy curve with a monotone PCHIP interpolant and identify where it crosses the normalized threshold.
+            To make the estimates more stable, I fit the accuracy vs. rank curve with a monotone PCHIP interpolant. I also compute what I call an "effective knee"—the rank that maximizes perpendicular distance between the smoothed curve and its endpoint secant. This is just a way to identify where improvements start to saturate.
+        </p>
+
+        <h2>Results on Vision Transformers</h2>
+        <p>
+            On Vision Transformers, the method shows that substantial compression is possible. Through systematic low-rank factorization and distillation, I was able to reduce parameters by roughly 11× while retaining about 94.7% of the teacher's accuracy. This suggests that these models, despite having millions of parameters, operate in considerably lower-dimensional spaces than their nominal capacity.
         </p>
 
         <p>
-            I also introduce the concept of an <strong>effective knee</strong>: the rank that maximizes perpendicular distance between the smoothed accuracy curve and its endpoint secant. This provides an intrinsic indicator of where marginal gains concentrate—the "sweet spot" of compression.
+            The framework is automated and doesn't require manual tuning for each architecture. This makes it possible to systematically compare intrinsic dimensionality across different models, datasets, and training conditions, though more work is needed to understand how these measurements relate to generalization and other properties.
         </p>
 
-        <h2>Results: 11× Compression with Minimal Loss</h2>
+        <h2>Why This Might Be Useful</h2>
         <p>
-            On Vision Transformers, the method achieves remarkable results. Through systematic low-rank factorization and distillation, I compressed models by <strong>11× in parameters while retaining 94.7% of the teacher's accuracy</strong>. The effective rank regions revealed that these massive models truly operate in surprisingly low-dimensional spaces.
-        </p>
-
-        <p>
-            More importantly, the framework is <em>automated and algorithmic</em>. Unlike previous methods that require manual inspection or heuristics, this approach provides a systematic way to measure intrinsic dimensionality across different architectures, datasets, and training regimes.
-        </p>
-
-        <h2>Why This Matters</h2>
-        <p>
-            Understanding the intrinsic dimensionality of neural networks has implications far beyond compression. It touches on fundamental questions:
+            Understanding intrinsic dimensionality could help address several questions in deep learning:
         </p>
 
         <ul style="line-height: 1.7;">
-            <li><strong>Generalization:</strong> Why do over-parameterized networks generalize? Perhaps because they converge to low-rank solutions.</li>
-            <li><strong>Transfer Learning:</strong> What structure is truly shared across tasks? The low-rank subspace may be where transfer happens.</li>
-            <li><strong>Interpretability:</strong> By identifying the dimensions that matter, we can focus our interpretability efforts where they count.</li>
-            <li><strong>Theory:</strong> A rigorous framework for measuring effective capacity bridges the gap between empirical practice and theoretical understanding.</li>
+            <li><strong>Compression:</strong> Identifying which dimensions matter could guide better compression strategies beyond simple pruning.</li>
+            <li><strong>Generalization:</strong> The relationship between effective rank and generalization is still unclear, but measuring both could help us understand this connection.</li>
+            <li><strong>Transfer Learning:</strong> If different tasks share low-rank subspaces, this could inform how we think about transfer and multitask learning.</li>
+            <li><strong>Interpretability:</strong> Focusing on the dimensions that carry most of the information might make interpretation more tractable.</li>
         </ul>
 
-        <h2>Looking Forward</h2>
+        <h2>Limitations and Future Work</h2>
         <p>
-            This work is a step toward understanding the true complexity of what neural networks learn. By treating rank as a measurable property rather than a static hyperparameter, we open new directions for exploring how dimensionality relates to architecture, data, and learning dynamics.
+            This work has several limitations. The method requires training multiple student networks, which is computationally expensive. The choice of distillation objective and training procedure can affect the results. And most importantly, "effective rank" as measured here is just one proxy for intrinsic dimensionality—there are likely other useful ways to measure this.
         </p>
 
         <p>
-            The framework is general enough to apply to any architecture and any task. My hope is that it provides a foundation for future work on the geometry of learned representations and the nature of compression in deep learning.
+            The framework is also limited to architectures where low-rank factorization makes sense. Extending this to other types of structure (sparsity, quantization, etc.) would be interesting but isn't covered by the current approach.
         </p>
 
         <div class="links">
